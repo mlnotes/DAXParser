@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using DAXParser.CodeParse.Data;
+using DAXParser.Data;
 using System.Text.RegularExpressions;
 using DAXParser.CodeParse.Config;
 
@@ -62,7 +62,7 @@ namespace DAXParser.CodeParse
 					else if (line.StartsWith(SOURCE))
 					{
 						MethodData method = ParseMethod(GetName(line, SOURCE), reader);
-						clazz.Methods.Add(method);
+						clazz.AddMethod(method);
 						clazz.Lines += method.Lines;
 					}
 					else
