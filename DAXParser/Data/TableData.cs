@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DAXParser.Data
 {
-	class ClassData: BaseObjectData
+	class TableData:BaseObjectData
 	{
 		
 	}

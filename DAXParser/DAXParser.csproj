@@ -46,8 +46,10 @@
     <Compile Include="Argument.cs" />
     <Compile Include="CodeParse\Config\CountryTags.cs" />
     <Compile Include="CodeParse\CoreParser.cs" />
+    <Compile Include="Data\BaseObjectData.cs" />
     <Compile Include="Data\ClassData.cs" />
     <Compile Include="Data\MethodData.cs" />
+    <Compile Include="Data\TableData.cs" />
     <Compile Include="Data\TagData.cs" />
     <Compile Include="ObjectMerge\ObjectMerger.cs" />
     <Compile Include="Program.cs" />

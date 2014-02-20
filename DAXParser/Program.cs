@@ -11,9 +11,13 @@ namespace DAXParser
 	{
 		static void Main(string[] args)
 		{
-			string path = @"D:\code\source\Application\Foundation\SYP\Classes\Tax.xpo";
-			ClassData cd = CoreParser.ParseClass(path);
-			Console.WriteLine("Name:[{0}], Lines:[{1}]", cd.Name, cd.Lines);
+			//string path = @"D:\code\source\Application\Foundation\SYP\Classes\Tax.xpo";
+			//ClassData cd = CoreParser.ParseClass(path);
+			//Console.WriteLine("Name:[{0}], Lines:[{1}]", cd.Name, cd.Lines);
+
+			string path = @"D:\code\source\Application\Foundation\SYP\Data Dictionary\Tables\TaxTrans.xpo";
+			TableData table = CoreParser.ParseTable(path);
+			Console.WriteLine("Name:[{0}], Lines:[{1}]", table.Name, table.Lines);
 		}
 	}
 }

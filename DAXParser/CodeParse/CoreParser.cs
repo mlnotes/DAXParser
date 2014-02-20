@@ -16,6 +16,7 @@ namespace DAXParser.CodeParse
 		private static string METHODS = "METHODS";
 		private static string SOURCE = "SOURCE";
 		private static string ENDMETHODS = "ENDMETHODS";
+		private static string TABLE = "TABLE";
 
 		public static MethodData ParseMethod(string name, StreamReader reader)
 		{
@@ -63,7 +64,6 @@ namespace DAXParser.CodeParse
 					{
 						MethodData method = ParseMethod(GetName(line, SOURCE), reader);
 						clazz.AddMethod(method);
-						clazz.Lines += method.Lines;
 					}
 					else
 					{
@@ -75,7 +75,37 @@ namespace DAXParser.CodeParse
 			}
 		}
 
-		
+		public static TableData ParseTable(string path)
+		{
+			using (StreamReader reader = new StreamReader(path))
+			{
+				TableData table = new TableData();
+
+				while (!reader.EndOfStream)
+				{
+					string line = reader.ReadLine().TrimStart();
+					if (line.StartsWith(TABLE))
+					{
+						table.Name = GetName(line, TABLE);
+					}
+					if (line.StartsWith(ENDMETHODS))
+					{
+						break;
+					}
+					else if (line.StartsWith(SOURCE))
+					{
+						MethodData method = ParseMethod(GetName(line, SOURCE), reader);
+						table.AddMethod(method);
+					}
+					else
+					{
+						continue;
+					}
+				}
+
+				return table;
+			}
+		}
 
 		private static string GetTag(string line)
 		{
@@ -96,9 +126,9 @@ namespace DAXParser.CodeParse
 			return null;
 		}
 
-		private static string GetName(string line, string obj)
+		private static string GetName(string line, string type)
 		{
-			return line.Substring(obj.Length).Trim().Substring(1);
+			return line.Substring(type.Length).Trim().Substring(1);
 		}
 	}
 }
