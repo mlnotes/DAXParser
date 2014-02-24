@@ -13,10 +13,12 @@ namespace DAXParser.CodeParse
 	{
 		private static string TagPattern = "//.*<(.{1,})>";
 		private static string CLASS = "CLASS";
+		private static string TABLE = "TABLE";
+		private static string ENUMTYPE = "ENUMTYPE";
+		
 		private static string METHODS = "METHODS";
 		private static string SOURCE = "SOURCE";
 		private static string ENDMETHODS = "ENDMETHODS";
-		private static string TABLE = "TABLE";
 
 		public static MethodData ParseMethod(string name, StreamReader reader)
 		{
@@ -56,7 +58,7 @@ namespace DAXParser.CodeParse
 					{
 						clazz.Name = GetName(line, CLASS);
 					}
-					if (line.StartsWith(ENDMETHODS))
+					else if (line.StartsWith(ENDMETHODS))
 					{
 						break;
 					}
@@ -88,7 +90,7 @@ namespace DAXParser.CodeParse
 					{
 						table.Name = GetName(line, TABLE);
 					}
-					if (line.StartsWith(ENDMETHODS))
+					else if (line.StartsWith(ENDMETHODS))
 					{
 						break;
 					}
@@ -104,6 +106,29 @@ namespace DAXParser.CodeParse
 				}
 
 				return table;
+			}
+		}
+
+		public static EnumData ParseEnum(string path)
+		{
+			using (StreamReader reader = new StreamReader(path))
+			{
+				EnumData data = new EnumData();
+
+				while (!reader.EndOfStream)
+				{
+					string line = reader.ReadLine().TrimStart();
+					if (line.StartsWith(ENUMTYPE))
+					{
+						data.Name = GetName(line, ENUMTYPE);
+					}
+					else if(line.StartsWith("#"))
+					{
+						data.Lines++;
+					}
+				}
+
+				return data;
 			}
 		}
 

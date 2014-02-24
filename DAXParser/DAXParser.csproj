@@ -48,6 +48,7 @@
     <Compile Include="CodeParse\CoreParser.cs" />
     <Compile Include="Data\BaseObjectData.cs" />
     <Compile Include="Data\ClassData.cs" />
+    <Compile Include="Data\EnumData.cs" />
     <Compile Include="Data\MethodData.cs" />
     <Compile Include="Data\TableData.cs" />
     <Compile Include="Data\TagData.cs" />
