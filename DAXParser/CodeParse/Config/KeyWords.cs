@@ -10,7 +10,7 @@ namespace DAXParser.CodeParse.Config
 		public static string DATASOURCE = "DATASOURCE";
 		public static string ENDDATASOURCE = "ENDDATASOURCE";
 		public static string Name = "Name";
-		public static string TABLE = "Table";
+		public static string TABLE = "TABLE";
 		public static string ENDTABLE = "ENDTABLE";
 		public static string DATAFIELD = "DATAFIELD";
 		public static string ENDDATAFIELD = "ENDDATAFIELD";
