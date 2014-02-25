@@ -59,6 +59,7 @@
     <Compile Include="CodeParse\Form\Design\ControlData.cs" />
     <Compile Include="CodeParse\MapData.cs" />
     <Compile Include="CodeParse\Common\MethodData.cs" />
+    <Compile Include="CodeParse\QueryData.cs" />
     <Compile Include="CodeParse\TableData.cs" />
     <Compile Include="CodeParse\Common\TagData.cs" />
     <Compile Include="ObjectMerge\ObjectMerger.cs" />

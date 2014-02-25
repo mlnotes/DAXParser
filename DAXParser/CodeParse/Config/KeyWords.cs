@@ -43,6 +43,11 @@ namespace DAXParser.CodeParse.Config
 		public static string MAPPINGS = "MAPPINGS";
 		public static string ENDMAPPINGS = "ENDMAPPINGS";
 
+		public static string QUERY = "QUERY";
+		public static string ENDQUERY = "ENDQUERY";
+		public static string BLOCKS = "BLOCKS";
+		public static string ENDBLOCKS = "ENDBLOCKS";
+
 		public static string METHODS = "METHODS";
 		public static string ENDMETHODS = "ENDMETHODS";
 		public static string SOURCE = "SOURCE";
