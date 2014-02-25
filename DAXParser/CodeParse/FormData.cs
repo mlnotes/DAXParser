@@ -79,7 +79,7 @@ namespace DAXParser.CodeParse
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine().TrimStart();
-					if (line.StartsWith(KeyWords.FORM))
+					if (string.IsNullOrEmpty(data.Name) && line.StartsWith(KeyWords.FORM))
 					{
 						data.Name = line.Substring(KeyWords.FORM.Length).Trim().Substring(1);
 					}
