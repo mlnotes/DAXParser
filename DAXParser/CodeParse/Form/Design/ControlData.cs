@@ -11,9 +11,15 @@ namespace DAXParser.CodeParse.Form.Design
 {
 	class ControlData: BaseObjectData
 	{
-		public static ControlData Parse(StreamReader reader)
+		public static ControlData Parse(string firstLine, StreamReader reader)
 		{
 			ControlData data = new ControlData();
+
+			int pos = firstLine.LastIndexOf('#');
+			if (pos >= 0)
+			{
+				data.Name = firstLine.Substring(pos + 1).Trim();
+			}
 
 			while (!reader.EndOfStream)
 			{

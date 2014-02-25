@@ -45,7 +45,7 @@ namespace DAXParser.CodeParse
 				string line = reader.ReadLine().TrimStart();
 				if (line.StartsWith(KeyWords.CONTROL))
 				{
-					data.AddControl(ControlData.Parse(reader));
+					data.AddControl(ControlData.Parse(line, reader));
 				}
 				else if (line.StartsWith(KeyWords.ENDDESIGN))
 				{

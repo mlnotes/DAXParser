@@ -56,10 +56,22 @@ namespace DAXParser
 			//    @"D:\code\source\Application\Foundation\SYP"
 			//}, "*_CN.xpo");
 
-			EnumDirParser.Parse(new string[] { 
+			//EnumDirParser.Parse(new string[] { 
+			//    @"D:\code\source\Application\sys",
+			//    @"D:\code\source\Application\Foundation\SYP"
+			//}, "*_CN.xpo");
+
+			FormDirParser.Parse(new string[] { 
 			    @"D:\code\source\Application\sys",
 			    @"D:\code\source\Application\Foundation\SYP"
 			}, "*_CN.xpo");
+
+			//string text = "CONTROL BUTTON #GeneralLedger";
+			//int pos = text.LastIndexOf('#');
+			//if (pos >= 0)
+			//{
+			//    Console.WriteLine("[{0}]", text.Substring(pos+1));
+			//}
 		}
 	}
 }
