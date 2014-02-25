@@ -48,6 +48,7 @@
     <Compile Include="CodeParse\Config\KeyWords.cs" />
     <Compile Include="CodeParse\BaseObjectData.cs" />
     <Compile Include="CodeParse\ClassData.cs" />
+    <Compile Include="CodeParse\DirParse\ClassDirParser.cs" />
     <Compile Include="CodeParse\EnumData.cs" />
     <Compile Include="CodeParse\FormData.cs" />
     <Compile Include="CodeParse\Form\ControlData.cs" />
