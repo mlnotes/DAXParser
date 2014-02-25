@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DAXParser.Data.Form.DataSource;
-using DAXParser.Data.Form.Design;
+using DAXParser.CodeParse.Form.DataSource;
+using DAXParser.CodeParse.Form.Design;
 using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
 
-namespace DAXParser.Data
+namespace DAXParser.CodeParse
 {
 	class FormData: BaseObjectData
 	{
@@ -88,7 +88,7 @@ namespace DAXParser.Data
 					}
 					else if (line.StartsWith(KeyWords.METHODS))
 					{
-						List<MethodData> methods = CoreParser.ParseMethods(reader);
+						List<MethodData> methods = ParseMethods(reader);
 						foreach (MethodData m in methods)
 						{
 							data.AddMethod(m);

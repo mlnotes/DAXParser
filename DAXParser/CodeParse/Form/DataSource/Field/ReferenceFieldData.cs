@@ -6,7 +6,7 @@ using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
 
-namespace DAXParser.Data.Form.DataSource.Field
+namespace DAXParser.CodeParse.Form.DataSource.Field
 {
 	class ReferenceFieldData: BaseObjectData
 	{
@@ -20,7 +20,7 @@ namespace DAXParser.Data.Form.DataSource.Field
 				string line = reader.ReadLine().TrimStart();
 				if (line.StartsWith(KeyWords.METHODS))
 				{
-					List<MethodData> methods = CoreParser.ParseMethods(reader);
+					List<MethodData> methods = ParseMethods(reader);
 					foreach (MethodData m in methods)
 					{
 						data.AddMethod(m);

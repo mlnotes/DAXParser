@@ -6,7 +6,7 @@ using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
 
-namespace DAXParser.Data.Form.Design
+namespace DAXParser.CodeParse.Form.Design
 {
 	class ControlData: BaseObjectData
 	{
@@ -27,7 +27,7 @@ namespace DAXParser.Data.Form.Design
 				}
 				else if (line.StartsWith(KeyWords.METHODS))
 				{
-					List<MethodData> methods = CoreParser.ParseMethods(reader);
+					List<MethodData> methods = ParseMethods(reader);
 					foreach (MethodData m in methods)
 					{
 						data.AddMethod(m);

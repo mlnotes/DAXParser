@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DAXParser.Data.Form.DataSource.Field;
+using DAXParser.CodeParse.Form.DataSource.Field;
 using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
 
-namespace DAXParser.Data.Form.DataSource
+namespace DAXParser.CodeParse.Form.DataSource
 {
 	class DataSourceData : BaseObjectData
 	{
@@ -74,11 +74,11 @@ namespace DAXParser.Data.Form.DataSource
 				}
 				else if (line.StartsWith(KeyWords.Name))
 				{
-					data.Name = CoreParser.GetName(line, KeyWords.Name);
+					data.Name = line.Substring(KeyWords.Name.Length).Trim().Substring(1);
 				}
 				else if (line.StartsWith(KeyWords.METHODS))
 				{
-					List<MethodData> methods = CoreParser.ParseMethods(reader);
+					List<MethodData> methods = ParseMethods(reader);
 					foreach (MethodData m in methods)
 					{
 						data.AddMethod(m);

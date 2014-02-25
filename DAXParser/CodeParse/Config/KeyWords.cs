@@ -10,7 +10,8 @@ namespace DAXParser.CodeParse.Config
 		public static string DATASOURCE = "DATASOURCE";
 		public static string ENDDATASOURCE = "ENDDATASOURCE";
 		public static string Name = "Name";
-		public static string Table = "Table";
+		public static string TABLE = "Table";
+		public static string ENDTABLE = "ENDTABLE";
 		public static string DATAFIELD = "DATAFIELD";
 		public static string ENDDATAFIELD = "ENDDATAFIELD";
 		public static string REFERENCEFIELD = "REFERENCEFIELD";
@@ -25,7 +26,18 @@ namespace DAXParser.CodeParse.Config
 		public static string ENDDESIGN = "ENDDESIGN";
 		public static string OBJECTBANK = "OBJECTBANK";
 		public static string ENDOBJECTBANK = "ENDOBJECTBANK";
-
+		public static string CLASS = "CLASS";
+		public static string ENDCLASS = "ENDCLASS";
+		public static string ENUMTYPE = "ENUMTYPE";
+		public static string ENDENUMTYPE = "ENDENUMTYPE";
+		public static string REFERENCES = "REFERENCES";
+		public static string ENDREFERENCES = "ENDREFERENCES";
+		public static string INDICES = "INDICES";
+		public static string ENDINDICES = "ENDINDICES";
+		
 		public static string METHODS = "METHODS";
+		public static string ENDMETHODS = "ENDMETHODS";
+		public static string SOURCE = "SOURCE";
+		public static string ENDSOURCE = "ENDSOURCE";
 	}
 }

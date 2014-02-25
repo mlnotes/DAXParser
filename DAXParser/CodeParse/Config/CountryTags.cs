@@ -18,5 +18,7 @@ namespace DAXParser.CodeParse.Config
 		{
 			return TAGS.Contains(tag);
 		}
+
+		public static string TagPattern = "//.*<(.{1,})>";
 	}
 }
