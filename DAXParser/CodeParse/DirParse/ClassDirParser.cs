@@ -9,9 +9,9 @@ namespace DAXParser.CodeParse.DirParse
 {
 	class ClassDirParser : BaseDirParser
 	{
-		public static void Parse(string[] layerPaths, string pattern = "*.xpo")
+		public static void Parse(string[] layerPaths, string moduleDir, string pattern = "*.xpo")
 		{
-			Parse(layerPaths, ModuleDirs.CLASS, ClassData.Parse, pattern);
+			Parse(layerPaths, moduleDir, ClassData.Parse, pattern);
 		}
 	}
 }

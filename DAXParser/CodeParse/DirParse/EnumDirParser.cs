@@ -8,9 +8,9 @@ namespace DAXParser.CodeParse.DirParse
 {
 	class EnumDirParser:BaseDirParser
 	{
-		public static void Parse(string[] layerPaths, string pattern = "*.xpo")
+		public static void Parse(string[] layerPaths, string moduleDir, string pattern = "*.xpo")
 		{
-			Parse(layerPaths, ModuleDirs.ENUM, EnumData.Parse, pattern);
+			Parse(layerPaths, moduleDir, EnumData.Parse, pattern);
 		}
 	}
 }
