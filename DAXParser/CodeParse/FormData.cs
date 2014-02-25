@@ -19,6 +19,25 @@ namespace DAXParser.CodeParse
 		public Dictionary<string, DataSourceData> DataSources { get { return dataSources; } }
 		public Dictionary<string, ControlData> Controls { get { return controls; } }
 
+		public override int MethodCount
+		{
+			get
+			{
+				int methodCount = methods.Count;
+				foreach (DataSourceData ds in dataSources.Values)
+				{
+					methodCount += ds.MethodCount;
+				}
+
+				foreach (ControlData control in controls.Values)
+				{
+					methodCount += control.MethodCount;
+				}
+
+				return methodCount;
+			}
+		}
+
 		public void AddDataSource(DataSourceData dataSource)
 		{
 			string name = dataSource.Name.ToUpper();
@@ -121,7 +140,6 @@ namespace DAXParser.CodeParse
 
 		public override BaseObjectData MergeWith(BaseObjectData data)
 		{
-			Console.WriteLine("FORM MERGE");
 			FormData fData = (FormData)data;
 
 			// merge methods

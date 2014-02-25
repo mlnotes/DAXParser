@@ -18,6 +18,25 @@ namespace DAXParser.CodeParse.Form.DataSource
 		public Dictionary<string, DataFieldData> DataFields { get { return dataFields; } }
 		public Dictionary<string, ReferenceFieldData> ReferenceFields { get { return referenceFields; } }
 
+		public override int MethodCount
+		{
+			get
+			{
+				int methodCount = methods.Count;
+				foreach (DataFieldData field in dataFields.Values)
+				{
+					methodCount += field.MethodCount;
+				}
+
+				foreach (ReferenceFieldData field in referenceFields.Values)
+				{
+					methodCount += field.MethodCount;
+				}
+
+				return methodCount;
+			}
+		}
+
 		public void AddDataField(DataFieldData field)
 		{
 			string name = field.Name.ToUpper();

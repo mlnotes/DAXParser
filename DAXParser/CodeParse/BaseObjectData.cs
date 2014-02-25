@@ -17,7 +17,7 @@ namespace DAXParser.CodeParse
 		public virtual int MethodCount { get { return methods.Count; } }
 		public Dictionary<string, MethodData> Methods { get { return methods; } }
 
-		public void AddMethod(MethodData method)
+		public virtual void AddMethod(MethodData method)
 		{
 			string name = method.Name.ToUpper();
 			if (methods.Keys.Contains(name))
@@ -69,7 +69,6 @@ namespace DAXParser.CodeParse
 
 		public virtual BaseObjectData MergeWith(BaseObjectData data)
 		{
-			Console.WriteLine("BASE MERGE");
 			foreach (KeyValuePair<string, MethodData> pair in data.Methods)
 			{
 				this.AddMethod(pair.Value);
