@@ -35,7 +35,14 @@ namespace DAXParser.CodeParse.Config
 		public static string ENDREFERENCES = "ENDREFERENCES";
 		public static string INDICES = "INDICES";
 		public static string ENDINDICES = "ENDINDICES";
-		
+
+		public static string MAP = "MAP";
+		public static string ENDMAP = "ENDMAP";
+		public static string FIELDS = "FIELDS";
+		public static string ENDFIELDS = "ENDFIELDS";
+		public static string MAPPINGS = "MAPPINGS";
+		public static string ENDMAPPINGS = "ENDMAPPINGS";
+
 		public static string METHODS = "METHODS";
 		public static string ENDMETHODS = "ENDMETHODS";
 		public static string SOURCE = "SOURCE";

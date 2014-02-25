@@ -54,5 +54,17 @@ namespace DAXParser.CodeParse
 			return methods;
 
 		}
+
+		protected static void SkipTo(StreamReader reader, string symbol)
+		{
+			while (!reader.EndOfStream)
+			{
+				string line = reader.ReadLine().TrimStart();
+				if (line.StartsWith(symbol))
+				{
+					break;
+				}
+			}
+		}
 	}
 }
