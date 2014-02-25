@@ -7,11 +7,8 @@ using DAXParser.CodeParse.Config;
 
 namespace DAXParser.CodeParse
 {
-	class EnumData
+	class EnumData: BaseObjectData
 	{
-		public string Name { get; set; }
-		public int Lines { get; set; }
-
 		public static EnumData Parse(string path)
 		{
 			using (StreamReader reader = new StreamReader(path))
@@ -37,6 +34,12 @@ namespace DAXParser.CodeParse
 
 				return data;
 			}
+		}
+
+		public BaseObjectData MergeWith(BaseObjectData data)
+		{
+			this.Lines = data.Lines;
+			return this;
 		}
 	}
 }

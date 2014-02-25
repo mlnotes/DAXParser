@@ -24,8 +24,8 @@ namespace DAXParser
 			//MapData data = MapData.Parse(path);
 			//Console.WriteLine("Name:[{0}], Mathods:[{1}], Lines:[{2}]", data.Name, data.Methods.Count, data.Lines);
 
-			//string path = @"D:\code\source\Application\Foundation\SYP\Data Dictionary\Base Enums\CustVendSettlementOffsetVoucherType.xpo";
-			//EnumData data = CoreParser.ParseEnum(path);
+			//string path = @"D:\code\source\Application\Foundation\SYP\Data Dictionary\Base Enums\DMFEntityType.xpo";
+			//EnumData data = EnumData.Parse(path);
 			//Console.WriteLine("Name:[{0}], Lines:[{1}]", data.Name, data.Lines);
 
 			//string path = @"D:\code\source\Application\Foundation\SYP\Forms\ProjIntercompanyInvoice.xpo";
@@ -51,7 +51,12 @@ namespace DAXParser
 			//    @"D:\code\source\Application\Foundation\SYP"
 			//}, "*.xpo");
 
-			QueryDirParser.Parse(new string[] { 
+			//QueryDirParser.Parse(new string[] { 
+			//    @"D:\code\source\Application\sys",
+			//    @"D:\code\source\Application\Foundation\SYP"
+			//}, "*_CN.xpo");
+
+			EnumDirParser.Parse(new string[] { 
 			    @"D:\code\source\Application\sys",
 			    @"D:\code\source\Application\Foundation\SYP"
 			}, "*_CN.xpo");
