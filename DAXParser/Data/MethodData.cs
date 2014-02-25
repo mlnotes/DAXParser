@@ -13,5 +13,6 @@ namespace DAXParser.Data
 		public int Lines { get; set; }
 		public List<TagData> Tags { get { return tags; } }
 		
+		
 	}
 }

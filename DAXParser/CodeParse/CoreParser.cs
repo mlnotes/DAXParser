@@ -6,6 +6,8 @@ using System.IO;
 using DAXParser.Data;
 using System.Text.RegularExpressions;
 using DAXParser.CodeParse.Config;
+using DAXParser.Data.Form;
+using DAXParser.Data.Form.DataSource.Field;
 
 namespace DAXParser.CodeParse
 {
@@ -13,14 +15,21 @@ namespace DAXParser.CodeParse
 	{
 		private static string TagPattern = "//.*<(.{1,})>";
 		private static string CLASS = "CLASS";
+		private static string ENDCLASS = "ENDCLASS";
 		private static string TABLE = "TABLE";
+		private static string ENDTABLE = "ENDTABLE";
 		private static string ENUMTYPE = "ENUMTYPE";
+		private static string ENDENUMTYPE = "ENDENUMTYPE";
+
+		private static string FORM = "FORM";
+		private static string ENDFORM = "ENDFORM";
 		
-		private static string METHODS = "METHODS";
+
+		
 		private static string SOURCE = "SOURCE";
 		private static string ENDMETHODS = "ENDMETHODS";
 
-		public static MethodData ParseMethod(string name, StreamReader reader)
+		private static MethodData ParseMethod(string name, StreamReader reader)
 		{
 			MethodData method = new MethodData();
 			method.Name = name;
@@ -45,6 +54,38 @@ namespace DAXParser.CodeParse
 			return method;
 		}
 
+		public static List<MethodData> ParseMethods(StreamReader reader)
+		{
+			List<MethodData> methods = new List<MethodData>();
+
+			while (!reader.EndOfStream)
+			{
+				string line = reader.ReadLine().TrimStart();
+				if (line.StartsWith(SOURCE))
+				{
+					methods.Add(ParseMethod(GetName(line, SOURCE), reader));
+				}
+				else if (line.StartsWith(ENDMETHODS))
+				{
+					break;
+				}
+				else
+				{
+					continue;
+				}
+
+			}
+
+			return methods;
+
+		}
+
+		public static List<DataFieldData> ParseDataFields(StreamReader reader)
+		{
+			// TODO
+			return null;
+		}
+
 		public static ClassData ParseClass(string path)
 		{
 			using (StreamReader reader = new StreamReader(path))
@@ -58,7 +99,7 @@ namespace DAXParser.CodeParse
 					{
 						clazz.Name = GetName(line, CLASS);
 					}
-					else if (line.StartsWith(ENDMETHODS))
+					else if (line.StartsWith(ENDCLASS))
 					{
 						break;
 					}
@@ -90,7 +131,7 @@ namespace DAXParser.CodeParse
 					{
 						table.Name = GetName(line, TABLE);
 					}
-					else if (line.StartsWith(ENDMETHODS))
+					else if (line.StartsWith(ENDTABLE))
 					{
 						break;
 					}
@@ -122,7 +163,11 @@ namespace DAXParser.CodeParse
 					{
 						data.Name = GetName(line, ENUMTYPE);
 					}
-					else if(line.StartsWith("#"))
+					else if (line.StartsWith(ENDENUMTYPE))
+					{
+						break;
+					}
+					else if (line.StartsWith("#"))
 					{
 						data.Lines++;
 					}
@@ -132,6 +177,47 @@ namespace DAXParser.CodeParse
 			}
 		}
 
+		public static FormData ParseForm(string path)
+		{
+			using (StreamReader reader = new StreamReader(path))
+			{
+				FormData data = new FormData();
+
+				while (!reader.EndOfStream)
+				{
+					string line = reader.ReadLine().TrimStart();
+					if (line.StartsWith(FORM))
+					{
+						data.Name = GetName(line, FORM);
+					}
+					else if (line.StartsWith(ENDFORM))
+					{
+						break;
+					}
+					else if (line.StartsWith(KeyWords.METHODS))
+					{
+						List<MethodData> methods = ParseMethods(reader);
+						foreach (MethodData m in methods)
+						{
+							data.AddMethod(m);
+						}
+					}
+					
+
+				}
+				
+
+
+				return data;
+			}
+
+			// TODO
+
+
+			return null;
+		}
+
+		
 		private static string GetTag(string line)
 		{
 			Match match = Regex.Match(line, CoreParser.TagPattern);
@@ -151,7 +237,7 @@ namespace DAXParser.CodeParse
 			return null;
 		}
 
-		private static string GetName(string line, string type)
+		public static string GetName(string line, string type)
 		{
 			return line.Substring(type.Length).Trim().Substring(1);
 		}
