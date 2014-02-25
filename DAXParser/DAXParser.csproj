@@ -62,7 +62,6 @@
     <Compile Include="CodeParse\QueryData.cs" />
     <Compile Include="CodeParse\TableData.cs" />
     <Compile Include="CodeParse\Common\TagData.cs" />
-    <Compile Include="ObjectMerge\ObjectMerger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -24,7 +24,7 @@ namespace DAXParser.CodeParse
 				Lines -= methods[name].Lines;
 			}
 
-			methods.Add(method.Name.ToUpper(), method);
+			methods[name] = method;
 			Lines += method.Lines;
 		}
 
@@ -65,6 +65,15 @@ namespace DAXParser.CodeParse
 					break;
 				}
 			}
+		}
+
+		public BaseObjectData MergeWith(BaseObjectData data)
+		{
+			foreach (KeyValuePair<string, MethodData> pair in data.Methods)
+			{
+				this.AddMethod(pair.Value);
+			}
+			return this;
 		}
 	}
 }

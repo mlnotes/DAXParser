@@ -32,12 +32,17 @@ namespace DAXParser
 			//FormData data = FormData.Parse(path);
 			//Console.WriteLine("Name:[{0}], Lines:[{1}]", data.Name, data.Lines);
 
-			string path = @"D:\code\source\Application\Foundation\SYP\Queries\VendInvoiceDocument.xpo";
-			QueryData data = QueryData.Parse(path);
-			Console.WriteLine("Name:[{0}], Mathods:[{1}], Lines:[{2}]", data.Name, data.Methods.Count, data.Lines);
+			//string path = @"D:\code\source\Application\Foundation\SYP\Queries\VendInvoiceDocument.xpo";
+			//QueryData data = QueryData.Parse(path);
+			//Console.WriteLine("Name:[{0}], Mathods:[{1}], Lines:[{2}]", data.Name, data.Methods.Count, data.Lines);
 
 			//ClassDirParser.Parse(@"D:\code\source\Application\Foundation\SYP\Classes");
 			//TableDirPath.Parse(@"D:\code\source\Application\Foundation\SYP\Data Dictionary\Tables");
+
+			ClassDirParser.Merge(new string[] { 
+				@"D:\code\source\Application\sys\Classes\Tax.xpo",
+				@"D:\code\source\Application\Foundation\SYP\Classes\Tax.xpo"
+			});
 		}
 	}
 }

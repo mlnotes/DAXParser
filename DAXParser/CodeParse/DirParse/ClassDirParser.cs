@@ -28,6 +28,15 @@ namespace DAXParser.CodeParse.DirParse
 			Console.WriteLine("Objects: [{0}]\nMethods: [{1}]\nLines: [{2}]", clazzes.Count, methods, lines);
 		}
 
+		public static void Merge(string[] paths)
+		{
+			ClassData data = ClassData.Parse(paths[0]);
+			for (int i = 1; i < paths.Length; ++i)
+			{
+				data.MergeWith(ClassData.Parse(paths[i]));
+			}
 
+			Console.WriteLine("\nMethods: [{0}]\nLines: [{1}]", data.Methods.Count, data.Lines);
+		}
 	}
 }
