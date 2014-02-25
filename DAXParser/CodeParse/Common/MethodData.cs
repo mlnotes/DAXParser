@@ -13,7 +13,7 @@ namespace DAXParser.CodeParse.Common
 		private List<TagData> tags = new List<TagData>();
 
 		public string Name { get; set; }
-		public int Lines { get; set; }
+		public int LineCount { get; set; }
 		public List<TagData> Tags { get { return tags; } }
 
 		private static string GetTag(string line)
@@ -45,11 +45,11 @@ namespace DAXParser.CodeParse.Common
 				string line = reader.ReadLine().TrimStart();
 				if (line.StartsWith("#"))
 				{
-					method.Lines++;
+					method.LineCount++;
 					string tag = GetTag(line);
 					if (tag != null)
 					{
-						method.Tags.Add(new TagData(tag, method.Lines));
+						method.Tags.Add(new TagData(tag, method.LineCount));
 					}
 				}
 				else

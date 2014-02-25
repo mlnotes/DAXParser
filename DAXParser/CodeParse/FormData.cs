@@ -29,7 +29,7 @@ namespace DAXParser.CodeParse
 			else
 			{
 				dataSources[name] = dataSource;
-				Lines += dataSource.Lines;
+				LineCount += dataSource.LineCount;
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace DAXParser.CodeParse
 			else
 			{
 				controls[name] = control;
-				Lines += control.Lines;
+				LineCount += control.LineCount;
 			}
 			
 		}

@@ -28,7 +28,7 @@ namespace DAXParser.CodeParse.Form.DataSource
 			else
 			{
 				dataFields.Add(name, field);
-				Lines += field.Lines;
+				LineCount += field.LineCount;
 			}
 		}
 
@@ -42,7 +42,7 @@ namespace DAXParser.CodeParse.Form.DataSource
 			else
 			{
 				referenceFields.Add(name, field);
-				Lines += field.Lines;
+				LineCount += field.LineCount;
 			}
 		}
 

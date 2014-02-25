@@ -13,7 +13,8 @@ namespace DAXParser.CodeParse
 		protected Dictionary<string, MethodData> methods = new Dictionary<string, MethodData>();
 
 		public string Name { get; set; }
-		public int Lines { get; set; }
+		public int LineCount { get; set; }
+		public virtual int MethodCount { get { return methods.Count; } }
 		public Dictionary<string, MethodData> Methods { get { return methods; } }
 
 		public void AddMethod(MethodData method)
@@ -21,11 +22,11 @@ namespace DAXParser.CodeParse
 			string name = method.Name.ToUpper();
 			if (methods.Keys.Contains(name))
 			{
-				Lines -= methods[name].Lines;
+				LineCount -= methods[name].LineCount;
 			}
 
 			methods[name] = method;
-			Lines += method.Lines;
+			LineCount += method.LineCount;
 		}
 	
 		protected static List<MethodData> ParseMethods(StreamReader reader)

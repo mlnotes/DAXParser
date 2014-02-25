@@ -65,7 +65,7 @@ namespace DAXParser.CodeParse.DirParse
 			foreach (T data in objects)
 			{
 				methods += data.Methods.Count;
-				lines += data.Lines;
+				lines += data.LineCount;
 			}
 			Console.WriteLine("Objects:[{0}], Methods:[{1}], Lines:[{2}]", objects.Count, methods, lines);
 		}
