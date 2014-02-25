@@ -52,6 +52,7 @@
     <Compile Include="CodeParse\DirParse\BaseDirParser.cs" />
     <Compile Include="CodeParse\DirParse\ClassDirParser.cs" />
     <Compile Include="CodeParse\DirParse\MapDirParser.cs" />
+    <Compile Include="CodeParse\DirParse\QueryDirParser.cs" />
     <Compile Include="CodeParse\DirParse\TableDirParser.cs" />
     <Compile Include="CodeParse\EnumData.cs" />
     <Compile Include="CodeParse\FormData.cs" />

@@ -46,10 +46,15 @@ namespace DAXParser
 			//    @"D:\code\source\Application\Foundation\SYP"
 			//}, "*_CN.xpo");
 
-			MapDirParser.Parse(new string[] { 
+			//MapDirParser.Parse(new string[] { 
+			//    @"D:\code\source\Application\sys",
+			//    @"D:\code\source\Application\Foundation\SYP"
+			//}, "*.xpo");
+
+			QueryDirParser.Parse(new string[] { 
 			    @"D:\code\source\Application\sys",
 			    @"D:\code\source\Application\Foundation\SYP"
-			}, "*.xpo");
+			}, "*_CN.xpo");
 		}
 	}
 }
