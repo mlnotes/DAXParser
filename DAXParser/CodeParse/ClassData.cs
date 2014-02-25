@@ -23,6 +23,10 @@ namespace DAXParser.CodeParse
 					{
 						data.Name = line.Substring(KeyWords.CLASS.Length).Trim().Substring(1);
 					}
+					else if(line.StartsWith(KeyWords.INTERFACE))
+					{
+						data.Name = line.Substring(KeyWords.INTERFACE.Length).Trim().Substring(1);
+					}
 					else if (line.StartsWith(KeyWords.ENDCLASS))
 					{
 						break;

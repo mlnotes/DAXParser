@@ -27,6 +27,7 @@ namespace DAXParser.CodeParse.Config
 		public static string OBJECTBANK = "OBJECTBANK";
 		public static string ENDOBJECTBANK = "ENDOBJECTBANK";
 		public static string CLASS = "CLASS";
+		public static string INTERFACE = "INTERFACE";
 		public static string ENDCLASS = "ENDCLASS";
 		public static string ENUMTYPE = "ENUMTYPE";
 		public static string ENDENUMTYPE = "ENDENUMTYPE";
