@@ -23,11 +23,13 @@ namespace DAXParser.CodeParse.Form.DataSource
 			string name = field.Name.ToUpper();
 			if (dataFields.Keys.Contains(name))
 			{
-				Lines -= dataFields[name].Lines;
+				dataFields[name].MergeWith(field);
 			}
-
-			dataFields.Add(name, field);
-			Lines += field.Lines;
+			else
+			{
+				dataFields.Add(name, field);
+				Lines += field.Lines;
+			}
 		}
 
 		public void AddReferenceField(ReferenceFieldData field)
@@ -35,11 +37,13 @@ namespace DAXParser.CodeParse.Form.DataSource
 			string name = field.Name.ToUpper();
 			if (referenceFields.Keys.Contains(name))
 			{
-				Lines -= referenceFields[name].Lines;
+				referenceFields[name].MergeWith(field);
 			}
-
-			referenceFields.Add(name, field);
-			Lines += field.Lines;
+			else
+			{
+				referenceFields.Add(name, field);
+				Lines += field.Lines;
+			}
 		}
 
 		private static void ParseFieldList(StreamReader reader, DataSourceData data)
@@ -96,6 +100,31 @@ namespace DAXParser.CodeParse.Form.DataSource
 			}
 
 			return data;
+		}
+
+		public override BaseObjectData MergeWith(BaseObjectData data)
+		{
+			DataSourceData dsData = (DataSourceData)data;
+
+			// merge methods
+			foreach (KeyValuePair<string, MethodData> pair in dsData.Methods)
+			{
+				this.AddMethod(pair.Value);
+			}
+
+			// merge data fields
+			foreach (KeyValuePair<string, DataFieldData> pair in dsData.DataFields)
+			{
+				this.AddDataField(pair.Value);
+			}
+
+			// merge reference fields
+			foreach (KeyValuePair<string, ReferenceFieldData> pair in dsData.ReferenceFields)
+			{
+				this.AddReferenceField(pair.Value);
+			}
+
+			return this;
 		}
 	}
 }

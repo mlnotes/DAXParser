@@ -58,7 +58,6 @@
     <Compile Include="CodeParse\DirParse\TableDirParser.cs" />
     <Compile Include="CodeParse\EnumData.cs" />
     <Compile Include="CodeParse\FormData.cs" />
-    <Compile Include="CodeParse\Form\ControlData.cs" />
     <Compile Include="CodeParse\Form\DataSource\DataSourceData.cs" />
     <Compile Include="CodeParse\Form\DataSource\Field\DataFieldData.cs" />
     <Compile Include="CodeParse\Form\DataSource\Field\ReferenceFieldData.cs" />

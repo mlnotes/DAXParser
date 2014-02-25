@@ -28,7 +28,7 @@ namespace DAXParser
 			//EnumData data = EnumData.Parse(path);
 			//Console.WriteLine("Name:[{0}], Lines:[{1}]", data.Name, data.Lines);
 
-			//string path = @"D:\code\source\Application\Foundation\SYP\Forms\ProjIntercompanyInvoice.xpo";
+			//string path = @"D:\code\source\Application\Foundation\SYP\Forms\AssetAllocationRuleSetup_CN.xpo";
 			//FormData data = FormData.Parse(path);
 			//Console.WriteLine("Name:[{0}], Lines:[{1}]", data.Name, data.Lines);
 
@@ -64,7 +64,7 @@ namespace DAXParser
 			FormDirParser.Parse(new string[] { 
 			    @"D:\code\source\Application\sys",
 			    @"D:\code\source\Application\Foundation\SYP"
-			}, "*_CN.xpo");
+			}, "*GBTPREVIEW_CN.xpo");
 
 			//string text = "CONTROL BUTTON #GeneralLedger";
 			//int pos = text.LastIndexOf('#');

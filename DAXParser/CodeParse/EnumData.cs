@@ -36,7 +36,7 @@ namespace DAXParser.CodeParse
 			}
 		}
 
-		public new BaseObjectData MergeWith(BaseObjectData data)
+		public override BaseObjectData MergeWith(BaseObjectData data)
 		{
 			this.Lines = data.Lines;
 			return this;

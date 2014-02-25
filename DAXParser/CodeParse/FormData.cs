@@ -16,26 +16,36 @@ namespace DAXParser.CodeParse
 		private Dictionary<string, DataSourceData> dataSources = new Dictionary<string,DataSourceData>();
 		private Dictionary<string, ControlData> controls = new Dictionary<string,ControlData>();
 
+		public Dictionary<string, DataSourceData> DataSources { get { return dataSources; } }
+		public Dictionary<string, ControlData> Controls { get { return controls; } }
+
 		public void AddDataSource(DataSourceData dataSource)
 		{
 			string name = dataSource.Name.ToUpper();
 			if (dataSources.Keys.Contains(name))
 			{
-				Lines -= dataSource.Lines;
+				dataSources[name].MergeWith(dataSource);
 			}
-			dataSources[name] = dataSource;
-			Lines += dataSource.Lines;
+			else
+			{
+				dataSources[name] = dataSource;
+				Lines += dataSource.Lines;
+			}
 		}
 
 		public void AddControl(ControlData control)
 		{
 			string name = control.Name.ToUpper();
-			if(controls.Keys.Contains(name))
+			if (controls.Keys.Contains(name))
 			{
-				Lines -= control.Lines;
+				controls[name].MergeWith(control);
 			}
-			controls[name] = control;
-			Lines += control.Lines;
+			else
+			{
+				controls[name] = control;
+				Lines += control.Lines;
+			}
+			
 		}
 
 		private static void ParseDesign(StreamReader reader, FormData data)
@@ -107,6 +117,32 @@ namespace DAXParser.CodeParse
 
 				return data;
 			}
+		}
+
+		public override BaseObjectData MergeWith(BaseObjectData data)
+		{
+			Console.WriteLine("FORM MERGE");
+			FormData fData = (FormData)data;
+
+			// merge methods
+			foreach (KeyValuePair<string, MethodData> pair in fData.Methods)
+			{
+				this.AddMethod(pair.Value);
+			}
+
+			// merge controls
+			foreach (KeyValuePair<string, ControlData> pair in fData.Controls)
+			{
+				this.AddControl(pair.Value);
+			}
+
+			// merge data sources
+			foreach (KeyValuePair<string, DataSourceData> pair in fData.DataSources)
+			{
+				this.AddDataSource(pair.Value);
+			}
+
+			return this;
 		}
 	}
 }

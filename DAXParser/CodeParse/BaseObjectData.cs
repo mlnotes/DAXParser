@@ -27,8 +27,7 @@ namespace DAXParser.CodeParse
 			methods[name] = method;
 			Lines += method.Lines;
 		}
-
-		
+	
 		protected static List<MethodData> ParseMethods(StreamReader reader)
 		{
 			List<MethodData> methods = new List<MethodData>();
@@ -67,8 +66,9 @@ namespace DAXParser.CodeParse
 			}
 		}
 
-		public BaseObjectData MergeWith(BaseObjectData data)
+		public virtual BaseObjectData MergeWith(BaseObjectData data)
 		{
+			Console.WriteLine("BASE MERGE");
 			foreach (KeyValuePair<string, MethodData> pair in data.Methods)
 			{
 				this.AddMethod(pair.Value);
