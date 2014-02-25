@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using DAXParser.CodeParse.Config;
+using DAXParser.CodeParse.Common;
 
 namespace DAXParser.CodeParse
 {

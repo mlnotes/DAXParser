@@ -6,6 +6,7 @@ using DAXParser.CodeParse.Form.DataSource.Field;
 using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
+using DAXParser.CodeParse.Common;
 
 namespace DAXParser.CodeParse.Form.DataSource
 {

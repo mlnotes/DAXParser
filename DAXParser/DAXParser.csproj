@@ -49,6 +49,7 @@
     <Compile Include="CodeParse\BaseObjectData.cs" />
     <Compile Include="CodeParse\ClassData.cs" />
     <Compile Include="CodeParse\DirParse\ClassDirParser.cs" />
+    <Compile Include="CodeParse\DirParse\TableDirPath.cs" />
     <Compile Include="CodeParse\EnumData.cs" />
     <Compile Include="CodeParse\FormData.cs" />
     <Compile Include="CodeParse\Form\ControlData.cs" />
@@ -56,9 +57,10 @@
     <Compile Include="CodeParse\Form\DataSource\Field\DataFieldData.cs" />
     <Compile Include="CodeParse\Form\DataSource\Field\ReferenceFieldData.cs" />
     <Compile Include="CodeParse\Form\Design\ControlData.cs" />
-    <Compile Include="CodeParse\MethodData.cs" />
+    <Compile Include="CodeParse\MapData.cs" />
+    <Compile Include="CodeParse\Common\MethodData.cs" />
     <Compile Include="CodeParse\TableData.cs" />
-    <Compile Include="CodeParse\TagData.cs" />
+    <Compile Include="CodeParse\Common\TagData.cs" />
     <Compile Include="ObjectMerge\ObjectMerger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

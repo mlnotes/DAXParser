@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DAXParser.CodeParse;
+using DAXParser.CodeParse.Common;
 
 namespace DAXParser.ObjectMerge
 {
