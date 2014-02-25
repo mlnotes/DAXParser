@@ -49,8 +49,10 @@
     <Compile Include="CodeParse\BaseObjectData.cs" />
     <Compile Include="CodeParse\ClassData.cs" />
     <Compile Include="CodeParse\Config\ModuleDirs.cs" />
+    <Compile Include="CodeParse\DataFactory.cs" />
+    <Compile Include="CodeParse\DirParse\BaseDirParser.cs" />
     <Compile Include="CodeParse\DirParse\ClassDirParser.cs" />
-    <Compile Include="CodeParse\DirParse\TableDirPath.cs" />
+    <Compile Include="CodeParse\DirParse\TableDirParser.cs" />
     <Compile Include="CodeParse\EnumData.cs" />
     <Compile Include="CodeParse\FormData.cs" />
     <Compile Include="CodeParse\Form\ControlData.cs" />

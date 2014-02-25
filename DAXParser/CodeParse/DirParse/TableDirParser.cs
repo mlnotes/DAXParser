@@ -7,11 +7,11 @@ using DAXParser.CodeParse.Config;
 
 namespace DAXParser.CodeParse.DirParse
 {
-	class ClassDirParser : BaseDirParser
+	class TableDirParser:BaseDirParser
 	{
 		public static void Parse(string[] layerPaths, string pattern = "*.xpo")
 		{
-			Parse(layerPaths, ModuleDirs.CLASS, ClassData.Parse, pattern);
+			Parse(layerPaths, ModuleDirs.TABLE, TableData.Parse, pattern);
 		}
 	}
 }

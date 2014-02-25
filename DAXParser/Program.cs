@@ -36,11 +36,15 @@ namespace DAXParser
 			//QueryData data = QueryData.Parse(path);
 			//Console.WriteLine("Name:[{0}], Mathods:[{1}], Lines:[{2}]", data.Name, data.Methods.Count, data.Lines);
 
-			ClassDirParser.Parse(new string[] { 
-				@"D:\code\source\Application\sys",
-				@"D:\code\source\Application\Foundation\SYP"
-			});
-			
+			//ClassDirParser.Parse(new string[] { 
+			//    @"D:\code\source\Application\sys",
+			//    @"D:\code\source\Application\Foundation\SYP"
+			//}, "*_CN.xpo");
+
+			TableDirParser.Parse(new string[] { 
+			    @"D:\code\source\Application\sys",
+			    @"D:\code\source\Application\Foundation\SYP"
+			}, "*_CN.xpo");
 			
 		}
 	}
