@@ -8,27 +8,34 @@ namespace DAXParser
 {
     class Argument
     {
-        private static string DIRS = "-dirs";
-        private static string MODULES = "-modules";
-        private static string OWNERSHIP = "-ownership";
+		private const string PATTERN = "-PATTERN";
+		private const string DIRS = "-DIRS";
+		private const string MODULES = "-MODULES";
+		private const string OWNERSHIP = "-OWNERSHIP";
 
-        private List<string> dirs;
-        private List<string> modules;
+		private string pattern = "*.xpo";
+        private string[] dirs;
+        private string[] modules;
         private Dictionary<string, string> ownership;
         
         private Argument()
         {
-            dirs = new List<string>();
-            modules = new List<string>();
+            dirs = new string[0];
+            modules = new string[0];
             ownership = new Dictionary<string, string>();
         }
 
-        public List<string> Dirs
+		public string Pattern
+		{
+			get { return pattern; }
+		}
+
+        public string[] Dirs
         {
             get { return dirs; }
         }
 
-        public List<string> Modules
+        public string[] Modules
         {
             get { return modules; }
         }
@@ -38,25 +45,42 @@ namespace DAXParser
             get { return ownership; }
         }
 
-        public static Argument parse(string[] args)
+        public static Argument Parse(string[] args)
         {
             Argument argument = new Argument();
             int i = 0;
             while (i < args.Length)
             {
-                if (args[i] == DIRS)
+				args[i] = args[i].ToUpper();
+				if (args[i] == PATTERN)
+				{
+					if (!args[i + 1].StartsWith("-"))
+					{
+						argument.pattern = args[i + 1];
+						i++;
+					}
+					i++;
+				}
+                else if (args[i] == DIRS)
                 {
+					List<string> dirs = new List<string>();
                     while (++i < args.Length && !args[i].StartsWith("-"))
                     {
-                        argument.dirs.Add(args[i]);
+                        dirs.Add(args[i]);
                     }
+					argument.dirs = dirs.ToArray();
                 }
                 else if(args[i] == MODULES)
                 {
+					List<string> modules = new List<string>();
                     while (++i < args.Length && !args[i].StartsWith("-"))
                     {
-                        argument.modules.Add(args[i]);
+						if(ModuleDirs.IsValidModule(args[i]))
+						{
+							modules.Add(args[i].ToUpper());
+						}
                     }
+					argument.modules = modules.ToArray();
                 }
                 else if(args[i] == OWNERSHIP)
                 {

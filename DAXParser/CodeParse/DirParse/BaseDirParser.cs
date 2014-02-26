@@ -27,37 +27,45 @@ namespace DAXParser.CodeParse.DirParse
 			}
 			Console.WriteLine("First Layer:{0}", objects.Count);
 
-			// get classes in upper layers
-			Dictionary<string, T>[] layers = new Dictionary<string, T>[layerPaths.Length - 1];
+			// merge classes in upper layers
+			Dictionary<string, T> upperLayers = new Dictionary<string, T>();
 			for (int i = 1; i < layerPaths.Length; ++i)
 			{
-				layers[i - 1] = ParseUpperLayer(layerPaths[i], module, pattern, parseFunc);
-				Console.WriteLine("Layer{0}: {1}", i, layers[i - 1].Count);
+				files = GetFiles(layerPaths[i], module, pattern);
+				foreach (FileInfo file in files)
+				{
+					T data = parseFunc(file.FullName);
+					string key = data.Name.ToUpper();
+					if (upperLayers.ContainsKey(key))
+					{
+						upperLayers[key].MergeWith(data);
+					}
+					else
+					{
+						upperLayers[key] = data;
+					}
+				}
+
 			}
 
-			// merge classes that exist in the first layer
+			// merge classes that exist in first layer
 			for (int i = 0; i < objects.Count; ++i)
 			{
 				T data = objects[i];
-				string name = data.Name.ToUpper();
-				for (int j = 0; j < layers.Length; ++j)
+				string key = data.Name.ToUpper();
+				if (upperLayers.ContainsKey(key))
 				{
-					if (layers[j].ContainsKey(name))
-					{
-						data.MergeWith(layers[j][name]);
-						layers[j].Remove(name);
-					}
+					data.MergeWith(upperLayers[key]);
+					upperLayers.Remove(key);
 				}
 			}
 
 			// mrege classes that do not exist in the first layer
-			for (int i = 0; i < layers.Length; ++i)
+			foreach (T data in upperLayers.Values)
 			{
-				foreach (KeyValuePair<string, T> pair in layers[i])
-				{
-					objects.Add(pair.Value);
-				}
+				objects.Add(data);
 			}
+			
 
 			// TODO dump?
 			int methods = 0;

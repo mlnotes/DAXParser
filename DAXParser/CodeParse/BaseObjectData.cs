@@ -69,9 +69,9 @@ namespace DAXParser.CodeParse
 
 		public virtual BaseObjectData MergeWith(BaseObjectData data)
 		{
-			foreach (KeyValuePair<string, MethodData> pair in data.Methods)
+			foreach (MethodData method in data.Methods.Values)
 			{
-				this.AddMethod(pair.Value);
+				this.AddMethod(method);
 			}
 			return this;
 		}

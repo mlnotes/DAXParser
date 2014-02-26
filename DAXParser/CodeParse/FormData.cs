@@ -143,21 +143,21 @@ namespace DAXParser.CodeParse
 			FormData fData = (FormData)data;
 
 			// merge methods
-			foreach (KeyValuePair<string, MethodData> pair in fData.Methods)
+			foreach (MethodData m in fData.Methods.Values)
 			{
-				this.AddMethod(pair.Value);
+				this.AddMethod(m);
 			}
 
 			// merge controls
-			foreach (KeyValuePair<string, ControlData> pair in fData.Controls)
+			foreach (ControlData control in fData.Controls.Values)
 			{
-				this.AddControl(pair.Value);
+				this.AddControl(control);
 			}
 
 			// merge data sources
-			foreach (KeyValuePair<string, DataSourceData> pair in fData.DataSources)
+			foreach (DataSourceData ds in fData.DataSources.Values)
 			{
-				this.AddDataSource(pair.Value);
+				this.AddDataSource(ds);
 			}
 
 			return this;

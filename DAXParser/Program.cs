@@ -12,41 +12,63 @@ namespace DAXParser
 	{
 		static void Main(string[] args)
 		{
-			//string path = @"D:\code\source\Application\Foundation\SYP\Classes\Tax.xpo";
-			//ClassData data = ClassData.Parse(path);
-			//Console.WriteLine("Name:[{0}], Lines:[{1}]", data.Name, data.Lines);
+			Argument arg = Argument.Parse(args);
+			if (arg.Dirs.Length == 0)
+			{
+				Help();
+				return;
+			}
 
-			//string path = @"D:\code\source\Application\Foundation\SYP\Data Dictionary\Tables\WMSOrderTrans.xpo";
-			//TableData data = TableData.Parse(path);
-			//Console.WriteLine("Name:[{0}], Lines:[{1}]", data.Name, data.Lines);
+			ParseCode(arg);
 
-			//string path = @"D:\code\source\Application\Foundation\SYP\Data Dictionary\Maps\AssetDepTransMap_JP.xpo";
-			//MapData data = MapData.Parse(path);
-			//Console.WriteLine("Name:[{0}], Mathods:[{1}], Lines:[{2}]", data.Name, data.Methods.Count, data.Lines);
+		}
 
-			//string path = @"D:\code\source\Application\Foundation\SYP\Data Dictionary\Base Enums\DMFEntityType.xpo";
-			//EnumData data = EnumData.Parse(path);
-			//Console.WriteLine("Name:[{0}], Lines:[{1}]", data.Name, data.Lines);
+		static void Help()
+		{
+			Console.WriteLine("Invalid Arguments");
+		}
 
-			//string path = @"D:\code\source\Application\Foundation\SYP\Forms\AssetAllocationRuleSetup_CN.xpo";
-			//FormData data = FormData.Parse(path);
-			//Console.WriteLine("Name:[{0}], Lines:[{1}]", data.Name, data.Lines);
+		static void ParseCode(Argument arg)
+		{
+			if(arg.Modules.Length > 0)
+			{
+				foreach(string module in arg.Modules)
+				{
+					ParseModule(arg.Dirs, module, arg.Pattern);
+				}
+			}
+			else
+			{
+				foreach(string module in ModuleDirs.Modules.Keys)
+				{
+					ParseModule(arg.Dirs, module, arg.Pattern);
+				}
+			}
+		}
 
-			//string path = @"D:\code\source\Application\Foundation\SYP\Queries\VendInvoiceDocument.xpo";
-			//QueryData data = QueryData.Parse(path);
-			//Console.WriteLine("Name:[{0}], Mathods:[{1}], Lines:[{2}]", data.Name, data.Methods.Count, data.Lines);
-
-			FormDirParser.Parse(new string[] { 
-			    @"D:\code\source\Application\sys",
-			    @"D:\code\source\Application\Foundation\SYP"
-			}, ModuleDirs.FORM, "*_CN.xpo");
-
-			//string text = "CONTROL BUTTON #GeneralLedger";
-			//int pos = text.LastIndexOf('#');
-			//if (pos >= 0)
-			//{
-			//    Console.WriteLine("[{0}]", text.Substring(pos+1));
-			//}
+		static void ParseModule(string[] dirs, String module, string pattern)
+		{
+			switch (module)
+			{
+				case ModuleDirs.Name.CLASS:
+					ClassDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					break;
+				case ModuleDirs.Name.TABLE:
+					TableDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					break;
+				case ModuleDirs.Name.FORM:
+					FormDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					break;
+				case ModuleDirs.Name.ENUM:
+					EnumDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					break;
+				case ModuleDirs.Name.MAP:
+					MapDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					break;
+				case ModuleDirs.Name.QUERY:
+					QueryDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					break;
+			}
 		}
 	}
 }

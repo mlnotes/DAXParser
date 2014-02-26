@@ -126,21 +126,21 @@ namespace DAXParser.CodeParse.Form.DataSource
 			DataSourceData dsData = (DataSourceData)data;
 
 			// merge methods
-			foreach (KeyValuePair<string, MethodData> pair in dsData.Methods)
+			foreach (MethodData m in dsData.Methods.Values)
 			{
-				this.AddMethod(pair.Value);
+				this.AddMethod(m);
 			}
 
 			// merge data fields
-			foreach (KeyValuePair<string, DataFieldData> pair in dsData.DataFields)
+			foreach (DataFieldData field in dsData.DataFields.Values)
 			{
-				this.AddDataField(pair.Value);
+				this.AddDataField(field);
 			}
 
 			// merge reference fields
-			foreach (KeyValuePair<string, ReferenceFieldData> pair in dsData.ReferenceFields)
+			foreach (ReferenceFieldData field in dsData.ReferenceFields.Values)
 			{
-				this.AddReferenceField(pair.Value);
+				this.AddReferenceField(field);
 			}
 
 			return this;
