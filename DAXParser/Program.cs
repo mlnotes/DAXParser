@@ -20,7 +20,6 @@ namespace DAXParser
 			}
 
 			ParseCode(arg);
-
 		}
 
 		static void Help()
@@ -51,21 +50,27 @@ namespace DAXParser
 			switch (module)
 			{
 				case ModuleDirs.Name.CLASS:
+					Console.WriteLine("[CLASS]");
 					ClassDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
 					break;
 				case ModuleDirs.Name.TABLE:
+					Console.WriteLine("[TABLE]");
 					TableDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
 					break;
 				case ModuleDirs.Name.FORM:
+					Console.WriteLine("[FORM]");
 					FormDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
 					break;
 				case ModuleDirs.Name.ENUM:
+					Console.WriteLine("[ENUM]");
 					EnumDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
 					break;
 				case ModuleDirs.Name.MAP:
+					Console.WriteLine("[MAP]");
 					MapDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
 					break;
 				case ModuleDirs.Name.QUERY:
+					Console.WriteLine("[QUERY]");
 					QueryDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
 					break;
 			}

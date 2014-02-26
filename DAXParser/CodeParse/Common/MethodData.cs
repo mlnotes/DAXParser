@@ -11,7 +11,7 @@ namespace DAXParser.CodeParse.Common
 	class MethodData
 	{
 		private List<TagData> tags = new List<TagData>();
-
+		
 		public string Name { get; set; }
 		public int LineCount { get; set; }
 		public List<TagData> Tags { get { return tags; } }
@@ -40,6 +40,7 @@ namespace DAXParser.CodeParse.Common
 			MethodData method = new MethodData();
 			method.Name = firstLine.Substring(KeyWords.SOURCE.Length).Trim().Substring(1);
 
+			Dictionary<string, Stack<int>> tagMap = new Dictionary<string,Stack<int>>();
 			while (!reader.EndOfStream)
 			{
 				string line = reader.ReadLine().TrimStart();
@@ -49,7 +50,26 @@ namespace DAXParser.CodeParse.Common
 					string tag = GetTag(line);
 					if (tag != null)
 					{
-						method.Tags.Add(new TagData(tag, method.LineCount));
+						if (tag.StartsWith("/"))
+						{
+							tag = tag.Substring(1);
+							if (tagMap.ContainsKey(tag) && tagMap[tag].Count > 0)
+							{
+								TagData td = new TagData();
+								td.Name = tag;
+								td.StartLine = tagMap[tag].Pop() + 1;
+								td.LineCount = method.LineCount - td.StartLine;
+								method.tags.Add(td);
+							}
+						}
+						else
+						{
+							if (!tagMap.ContainsKey(tag))
+							{
+								tagMap[tag] = new Stack<int>();
+							}
+							tagMap[tag].Push(method.LineCount);
+						}
 					}
 				}
 				else
@@ -57,6 +77,7 @@ namespace DAXParser.CodeParse.Common
 					break;
 				}
 			}
+
 			return method;
 		}
 	}

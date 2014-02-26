@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Argument.cs" />
+    <Compile Include="CodeParse\Common\TagData.cs" />
     <Compile Include="CodeParse\Config\CountryTags.cs" />
     <Compile Include="CodeParse\Config\KeyWords.cs" />
     <Compile Include="CodeParse\BaseObjectData.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="CodeParse\Common\MethodData.cs" />
     <Compile Include="CodeParse\QueryData.cs" />
     <Compile Include="CodeParse\TableData.cs" />
-    <Compile Include="CodeParse\Common\TagData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
