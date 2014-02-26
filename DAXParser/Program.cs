@@ -48,8 +48,8 @@ namespace DAXParser
 				return;
 			}
 
-			//ParseCode(arg);
-			PatternTest();
+			ParseCode(arg);
+			//PatternTest();
 		}
 
 		static void Help()
