@@ -5,15 +5,20 @@ using System.Text;
 using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse.Common;
+using DAXParser.zhfDataSetTableAdapters;
 
 namespace DAXParser.CodeParse
 {
 	class BaseObjectData
 	{
 		protected Dictionary<string, MethodData> methods = new Dictionary<string, MethodData>();
+		protected int lineCount = 0;
+		protected int tagCount = 0;
 
 		public string Name { get; set; }
-		public int LineCount { get; set; }
+		public string Owner { get; set; }
+		public virtual int LineCount { get { return lineCount; } }
+		public virtual int TagCount { get { return tagCount; } }
 		public virtual int MethodCount { get { return methods.Count; } }
 		public Dictionary<string, MethodData> Methods { get { return methods; } }
 
@@ -22,11 +27,13 @@ namespace DAXParser.CodeParse
 			string name = method.Name.ToUpper();
 			if (methods.Keys.Contains(name))
 			{
-				LineCount -= methods[name].LineCount;
+				lineCount -= methods[name].LineCount;
+				tagCount -= methods[name].TagCount;
 			}
 
 			methods[name] = method;
-			LineCount += method.LineCount;
+			lineCount += method.LineCount;
+			tagCount += method.TagCount;
 		}
 	
 		protected static List<MethodData> ParseMethods(StreamReader reader)
@@ -75,5 +82,6 @@ namespace DAXParser.CodeParse
 			}
 			return this;
 		}
+
 	}
 }

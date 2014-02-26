@@ -37,17 +37,38 @@ namespace DAXParser.CodeParse.Form.DataSource
 			}
 		}
 
+		public override int TagCount
+		{
+			get
+			{
+				int tagCount = this.tagCount;
+				foreach (DataFieldData field in dataFields.Values)
+				{
+					tagCount += field.TagCount;
+				}
+
+				foreach (ReferenceFieldData field in referenceFields.Values)
+				{
+					tagCount += field.TagCount;
+				}
+
+				return tagCount;
+			}
+		}
+
 		public void AddDataField(DataFieldData field)
 		{
 			string name = field.Name.ToUpper();
 			if (dataFields.Keys.Contains(name))
 			{
+				lineCount -= dataFields[name].LineCount;
 				dataFields[name].MergeWith(field);
+				lineCount += dataFields[name].LineCount;
 			}
 			else
 			{
 				dataFields.Add(name, field);
-				LineCount += field.LineCount;
+				lineCount += field.LineCount;
 			}
 		}
 
@@ -56,12 +77,14 @@ namespace DAXParser.CodeParse.Form.DataSource
 			string name = field.Name.ToUpper();
 			if (referenceFields.Keys.Contains(name))
 			{
+				lineCount -= referenceFields[name].LineCount;
 				referenceFields[name].MergeWith(field);
+				lineCount += referenceFields[name].LineCount;
 			}
 			else
 			{
 				referenceFields.Add(name, field);
-				LineCount += field.LineCount;
+				lineCount += field.LineCount;
 			}
 		}
 

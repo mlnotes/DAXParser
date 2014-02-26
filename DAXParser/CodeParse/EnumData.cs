@@ -28,7 +28,7 @@ namespace DAXParser.CodeParse
 					}
 					else if (line.StartsWith("#"))
 					{
-						data.LineCount++;
+						data.lineCount++;
 					}
 				}
 
@@ -38,7 +38,7 @@ namespace DAXParser.CodeParse
 
 		public override BaseObjectData MergeWith(BaseObjectData data)
 		{
-			this.LineCount = data.LineCount;
+			this.lineCount = data.LineCount;
 			return this;
 		}
 	}

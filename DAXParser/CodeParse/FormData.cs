@@ -38,17 +38,38 @@ namespace DAXParser.CodeParse
 			}
 		}
 
+		public override int TagCount
+		{
+			get
+			{
+				int tagCount = this.tagCount;
+				foreach (DataSourceData ds in dataSources.Values)
+				{
+					tagCount += ds.TagCount;
+				}
+
+				foreach (ControlData control in controls.Values)
+				{
+					tagCount += control.TagCount;
+				}
+
+				return tagCount;
+			}
+		}
+
 		public void AddDataSource(DataSourceData dataSource)
 		{
 			string name = dataSource.Name.ToUpper();
 			if (dataSources.Keys.Contains(name))
 			{
+				lineCount -= dataSources[name].LineCount;
 				dataSources[name].MergeWith(dataSource);
+				lineCount += dataSources[name].LineCount;
 			}
 			else
 			{
 				dataSources[name] = dataSource;
-				LineCount += dataSource.LineCount;
+				lineCount += dataSource.LineCount;
 			}
 		}
 
@@ -57,12 +78,14 @@ namespace DAXParser.CodeParse
 			string name = control.Name.ToUpper();
 			if (controls.Keys.Contains(name))
 			{
+				lineCount -= controls[name].LineCount;
 				controls[name].MergeWith(control);
+				lineCount += controls[name].LineCount;
 			}
 			else
 			{
 				controls[name] = control;
-				LineCount += control.LineCount;
+				lineCount += control.LineCount;
 			}
 			
 		}

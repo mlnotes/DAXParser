@@ -15,6 +15,7 @@ namespace DAXParser.CodeParse.Common
 		public string Name { get; set; }
 		public int LineCount { get; set; }
 		public List<TagData> Tags { get { return tags; } }
+		public int TagCount { get { return tags.Count; } }
 
 		private static string GetTag(string line)
 		{

@@ -10,6 +10,12 @@ namespace DAXParser.CodeParse.DirParse
 	class BaseDirParser
 	{
 		protected static void Parse<T>(string[] layerPaths, string module, Func<string, T> parseFunc, string pattern = "*.xpo")
+			where T : BaseObjectData
+		{
+			Parse(layerPaths, module, parseFunc, null, pattern);
+		}
+
+		protected static void Parse<T>(string[] layerPaths, string module, Func<string, T> parseFunc, Action<T> dumpFunc, string pattern = "*.xpo")
 			where T:BaseObjectData
 		{
 			if (layerPaths == null || layerPaths.Length == 0)
@@ -25,7 +31,6 @@ namespace DAXParser.CodeParse.DirParse
 			{
 				objects.Add(parseFunc(file.FullName));
 			}
-			Console.WriteLine("First Layer:{0}", objects.Count);
 
 			// merge classes in upper layers
 			Dictionary<string, T> upperLayers = new Dictionary<string, T>();
@@ -45,7 +50,6 @@ namespace DAXParser.CodeParse.DirParse
 						upperLayers[key] = data;
 					}
 				}
-
 			}
 
 			// merge classes that exist in first layer
@@ -68,14 +72,13 @@ namespace DAXParser.CodeParse.DirParse
 			
 
 			// TODO dump?
-			int methods = 0;
-			int lines = 0;
-			foreach (T data in objects)
+			if (dumpFunc != null)
 			{
-				methods += data.MethodCount;
-				lines += data.LineCount;
+				foreach (T data in objects)
+				{
+					dumpFunc(data);
+				}
 			}
-			Console.WriteLine("Objects:[{0}], Methods:[{1}], Lines:[{2}]", objects.Count, methods, lines);
 		}
 
 		protected static FileInfo[] GetFiles(string layerPath, string module, string pattern)
