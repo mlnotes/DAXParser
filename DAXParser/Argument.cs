@@ -99,16 +99,24 @@ namespace DAXParser
 
         private static void parseOwnership(Dictionary<string, string> dict, string path)
         {
-            string[] lines = File.ReadAllLines(path);
+			if (!File.Exists(path))
+			{
+				return;
+			}
 
-            for (int i = 1; i < lines.Length; ++i)
-            {
-                string[] parts = lines[i].Split('	');
-                if (parts.Length >= 2)
-                {
-                    dict[parts[1]] = parts[0];
-                }
-            }
+			using (StreamReader reader = new StreamReader(path))
+			{
+				string line = reader.ReadLine();
+				while (!reader.EndOfStream)
+				{
+					line = reader.ReadLine().Trim();
+					string[] parts = line.Split('\t');
+					if (parts.Length >= 2)
+					{
+						dict[parts[1].ToUpper()] = parts[0];
+					}
+				}
+			}
         }
     }
 }
