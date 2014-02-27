@@ -55,7 +55,6 @@
     <Compile Include="CodeParse\DirParse\DirParser.cs" />
     <Compile Include="CodeParse\Persistent\CSVDumper.cs" />
     <Compile Include="ModuleDirs.cs" />
-    <Compile Include="CodeParse\DirParse\BaseDirParser.cs" />
     <Compile Include="CodeParse\EnumData.cs" />
     <Compile Include="CodeParse\FormData.cs" />
     <Compile Include="CodeParse\Form\DataSource\DataSourceData.cs" />
