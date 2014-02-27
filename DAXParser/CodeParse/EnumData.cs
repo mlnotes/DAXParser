@@ -41,5 +41,10 @@ namespace DAXParser.CodeParse
 			this.lineCount = data.LineCount;
 			return this;
 		}
+
+		public override string Type
+		{
+			get { return "ENUM"; }
+		}
 	}
 }

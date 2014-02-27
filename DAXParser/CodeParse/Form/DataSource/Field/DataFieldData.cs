@@ -11,6 +11,11 @@ namespace DAXParser.CodeParse.Form.DataSource.Field
 {
 	class DataFieldData : BaseObjectData
 	{
+		public override string Type
+		{
+			get { return "DATAFIELD"; }
+		}
+
 		public static DataFieldData Parse(string firstLine, StreamReader reader)
 		{
 			DataFieldData data = new DataFieldData();

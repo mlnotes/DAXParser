@@ -10,6 +10,11 @@ namespace DAXParser.CodeParse
 {
 	class MapData: BaseObjectData
 	{
+		public override string Type
+		{
+			get { return "MAP"; }
+		}
+
 		public static MapData Parse(string path)
 		{
 			using (StreamReader reader = new StreamReader(path))

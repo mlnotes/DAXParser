@@ -5,11 +5,10 @@ using System.Text;
 using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse.Common;
-using DAXParser.zhfDataSetTableAdapters;
 
 namespace DAXParser.CodeParse
 {
-	class BaseObjectData
+	abstract class BaseObjectData
 	{
 		protected Dictionary<string, MethodData> methods = new Dictionary<string, MethodData>();
 		protected int lineCount = 0;
@@ -20,6 +19,7 @@ namespace DAXParser.CodeParse
 		public virtual int LineCount { get { return lineCount; } }
 		public virtual int TagCount { get { return tagCount; } }
 		public virtual int MethodCount { get { return methods.Count; } }
+		public abstract string Type { get;}
 		public Dictionary<string, MethodData> Methods { get { return methods; } }
 
 		public virtual void AddMethod(MethodData method)
@@ -82,6 +82,5 @@ namespace DAXParser.CodeParse
 			}
 			return this;
 		}
-
 	}
 }

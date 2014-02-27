@@ -12,6 +12,11 @@ namespace DAXParser.CodeParse.Form.DataSource
 {
 	class DataSourceData : BaseObjectData
 	{
+		public override string Type
+		{
+			get { return "DATASOURCE"; }
+		}
+
 		private Dictionary<string, DataFieldData> dataFields = new Dictionary<string, DataFieldData>();
 		private Dictionary<string, ReferenceFieldData> referenceFields = new Dictionary<string, ReferenceFieldData>();
 

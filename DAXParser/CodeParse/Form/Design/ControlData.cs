@@ -11,6 +11,11 @@ namespace DAXParser.CodeParse.Form.Design
 {
 	class ControlData: BaseObjectData
 	{
+		public override string Type
+		{
+			get { return "CONTROL"; }
+		}
+
 		public static ControlData Parse(string firstLine, StreamReader reader)
 		{
 			ControlData data = new ControlData();

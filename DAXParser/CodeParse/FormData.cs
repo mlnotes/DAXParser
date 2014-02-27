@@ -13,6 +13,11 @@ namespace DAXParser.CodeParse
 {
 	class FormData: BaseObjectData
 	{
+		public override string Type
+		{
+			get { return "FORM"; }
+		}
+
 		private Dictionary<string, DataSourceData> dataSources = new Dictionary<string,DataSourceData>();
 		private Dictionary<string, ControlData> controls = new Dictionary<string,ControlData>();
 

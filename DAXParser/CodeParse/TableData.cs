@@ -10,6 +10,11 @@ namespace DAXParser.CodeParse
 {
 	class TableData:BaseObjectData
 	{
+		public override string Type
+		{
+			get { return "TABLE"; }
+		}
+
 		private static void ParseReferences(StreamReader reader)
 		{
 			while (!reader.EndOfStream)

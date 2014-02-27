@@ -8,6 +8,7 @@ using DAXParser.CodeParse.DirParse;
 using DAXParser.CodeParse.Persistent;
 using System.IO;
 
+
 namespace DAXParser
 {
 	class Program
@@ -62,49 +63,62 @@ namespace DAXParser
 
 		static void ParseCode(Argument arg)
 		{
+			CSVDumper dumper = CSVDumper.GetInstance();
+			if (!string.IsNullOrEmpty(arg.Output))
+			{
+				dumper.Output = arg.Output;
+			}
+
 			if(arg.Modules.Length > 0)
 			{
 				foreach(string module in arg.Modules)
 				{
-					ParseModule(arg.Dirs, module, arg.Ownership, arg.Pattern);
+					ParseModule(arg.Dirs, module, arg.Ownership, arg.Pattern, dumper);
 				}
 			}
 			else
 			{
 				foreach(string module in ModuleDirs.Modules.Keys)
 				{
-					ParseModule(arg.Dirs, module, arg.Ownership, arg.Pattern);
+					ParseModule(arg.Dirs, module, arg.Ownership, arg.Pattern, dumper);
 				}
 			}
+			dumper.Dispose();
 		}
 
-		static void ParseModule(string[] dirs, String module, Dictionary<string, string> ownership, string pattern)
+		static void ParseModule(string[] dirs, String module, Dictionary<string, string> ownership, string pattern, CSVDumper dumper)
 		{
 			switch (module)
 			{
 				case ModuleDirs.Name.CLASS:
-					Console.WriteLine("[CLASS]");
-					ClassDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
+					Console.WriteLine("[Parsing CLASS ...]");
+					List<ClassData> classes = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, ClassData.Parse, pattern);
+					dumper.DumpClass(classes);
 					break;
 				case ModuleDirs.Name.TABLE:
-					Console.WriteLine("[TABLE]");
-					TableDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
+					Console.WriteLine("[Parsing TABLE ...]");
+					List<TableData> tables = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, TableData.Parse, pattern);
+					dumper.DumpTable(tables);
 					break;
 				case ModuleDirs.Name.FORM:
-					Console.WriteLine("[FORM]");
-					FormDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
+					Console.WriteLine("[Parsing FORM ...]");
+					List<FormData> forms = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, FormData.Parse, pattern);
+					dumper.DumpForm(forms);
 					break;
 				case ModuleDirs.Name.ENUM:
-					Console.WriteLine("[ENUM]");
-					EnumDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
+					Console.WriteLine("[Parsing ENUM ...]");
+					List<EnumData> enums = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, EnumData.Parse, pattern);
+					dumper.DumpEnum(enums);
 					break;
 				case ModuleDirs.Name.MAP:
-					Console.WriteLine("[MAP]");
-					MapDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
+					Console.WriteLine("[Parsing MAP ...]");
+					List<MapData> maps = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, MapData.Parse, pattern);
+					dumper.DumpMap(maps);
 					break;
 				case ModuleDirs.Name.QUERY:
-					Console.WriteLine("[QUERY]");
-					QueryDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
+					Console.WriteLine("[Parsing QUERY ...]");
+					List<QueryData> queries = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, QueryData.Parse, pattern);
+					dumper.DumpQuery(queries);
 					break;
 			}
 		}

@@ -41,5 +41,10 @@ namespace DAXParser.CodeParse
 				return data;
 			}
 		}
+
+		public override string Type
+		{
+			get { return "QUERY"; }
+		}
 	}
 }

@@ -11,6 +11,11 @@ namespace DAXParser.CodeParse
 {
 	class ClassData: BaseObjectData
 	{
+		public override string Type
+		{
+			get { return "CLASS"; }
+		}
+
 		public static ClassData Parse(string path)
 		{
 			using (StreamReader reader = new StreamReader(path))

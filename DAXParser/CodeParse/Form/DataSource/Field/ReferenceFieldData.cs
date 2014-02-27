@@ -11,6 +11,11 @@ namespace DAXParser.CodeParse.Form.DataSource.Field
 {
 	class ReferenceFieldData: BaseObjectData
 	{
+		public override string Type
+		{
+			get { return "REFERENCEFIELD"; }
+		}
+
 		public static ReferenceFieldData Parse(string firstLine, StreamReader reader)
 		{
 			ReferenceFieldData data = new ReferenceFieldData();
