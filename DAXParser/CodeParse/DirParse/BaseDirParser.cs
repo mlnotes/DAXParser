@@ -9,13 +9,34 @@ namespace DAXParser.CodeParse.DirParse
 {
 	class BaseDirParser
 	{
-		protected static void Parse<T>(string[] layerPaths, string module, Func<string, T> parseFunc, string pattern = "*.xpo")
+		protected static void Parse<T>(string[] layerPaths, string module, Func<string, T> parseFunc, Action<T> dumpFunc, string pattern = "*.xpo")
 			where T : BaseObjectData
 		{
-			Parse(layerPaths, module, parseFunc, null, pattern);
+			Parse(layerPaths, module, null, parseFunc, dumpFunc, pattern);
 		}
 
-		protected static void Parse<T>(string[] layerPaths, string module, Func<string, T> parseFunc, Action<T> dumpFunc, string pattern = "*.xpo")
+		protected static void AddObject<T>(List<T> objects, T obj, Dictionary<string, string> ownership)
+			where T : BaseObjectData
+		{
+			if (ownership != null)
+			{
+				string name = obj.Name.ToUpper();
+				string prefix = "";
+				for (int i = 1; i <= name.Length; ++i)
+				{
+					prefix = name.Substring(0, i);
+					if (ownership.ContainsKey(prefix))
+					{
+						obj.Owner = ownership[prefix];
+						break;
+					}
+				}
+			}
+
+			objects.Add(obj);
+		}
+
+		protected static void Parse<T>(string[] layerPaths, string module, Dictionary<string, string> ownership, Func<string, T> parseFunc, Action<T> dumpFunc, string pattern = "*.xpo")
 			where T:BaseObjectData
 		{
 			if (layerPaths == null || layerPaths.Length == 0)
@@ -26,13 +47,14 @@ namespace DAXParser.CodeParse.DirParse
 			FileInfo[] files = GetFiles(layerPaths[0], module, pattern);
 			List<T> objects = new List<T>();
 
-			// Get all classes in the first layer
+			// Get all objects in the first layer
 			foreach (FileInfo file in files)
 			{
-				objects.Add(parseFunc(file.FullName));
+				T data = parseFunc(file.FullName);
+				AddObject(objects, data, ownership);
 			}
 
-			// merge classes in upper layers
+			// merge objects in upper layers
 			Dictionary<string, T> upperLayers = new Dictionary<string, T>();
 			for (int i = 1; i < layerPaths.Length; ++i)
 			{
@@ -52,7 +74,7 @@ namespace DAXParser.CodeParse.DirParse
 				}
 			}
 
-			// merge classes that exist in first layer
+			// merge objects that exist in first layer
 			for (int i = 0; i < objects.Count; ++i)
 			{
 				T data = objects[i];
@@ -64,13 +86,12 @@ namespace DAXParser.CodeParse.DirParse
 				}
 			}
 
-			// mrege classes that do not exist in the first layer
+			// mrege objects that do not exist in the first layer
 			foreach (T data in upperLayers.Values)
 			{
-				objects.Add(data);
+				AddObject(objects, data, ownership);
 			}
 			
-
 			// TODO dump?
 			if (dumpFunc != null)
 			{

@@ -14,7 +14,7 @@ namespace DAXParser
 	{
 		static void PatternTest()
 		{
-			string line = @"#    boolean             depreciationParameters = AssetParameters::checkAssetParameters_IN();";
+			string line = @"if (_assetBook.AssetGroupDepreciation_IN    == NoYes::Yes   ";
 			string tags = "(RU|IN|BR|HU|JP|LV|EU|LT|CN|CZ|EE|PL|W)";
 			string validChars = "[A-Za-z0-9_]";
 			string validEndings = @"([><!=&|\)\s;{]*|[><!=&|\)\s;{]{1,}.*)";
@@ -41,6 +41,7 @@ namespace DAXParser
 
 		static void Main(string[] args)
 		{
+			long start = DateTime.Now.Ticks;
 			Argument arg = Argument.Parse(args);
 			if (arg.Dirs.Length == 0)
 			{
@@ -50,6 +51,8 @@ namespace DAXParser
 
 			ParseCode(arg);
 			//PatternTest();
+			long end = DateTime.Now.Ticks;
+			Console.WriteLine("Total Time in ticks: {0}", end-start);
 		}
 
 		static void Help()
@@ -63,45 +66,45 @@ namespace DAXParser
 			{
 				foreach(string module in arg.Modules)
 				{
-					ParseModule(arg.Dirs, module, arg.Pattern);
+					ParseModule(arg.Dirs, module, arg.Ownership, arg.Pattern);
 				}
 			}
 			else
 			{
 				foreach(string module in ModuleDirs.Modules.Keys)
 				{
-					ParseModule(arg.Dirs, module, arg.Pattern);
+					ParseModule(arg.Dirs, module, arg.Ownership, arg.Pattern);
 				}
 			}
 		}
 
-		static void ParseModule(string[] dirs, String module, string pattern)
+		static void ParseModule(string[] dirs, String module, Dictionary<string, string> ownership, string pattern)
 		{
 			switch (module)
 			{
 				case ModuleDirs.Name.CLASS:
 					Console.WriteLine("[CLASS]");
-					ClassDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					ClassDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
 					break;
 				case ModuleDirs.Name.TABLE:
 					Console.WriteLine("[TABLE]");
-					TableDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					TableDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
 					break;
 				case ModuleDirs.Name.FORM:
 					Console.WriteLine("[FORM]");
-					FormDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					FormDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
 					break;
 				case ModuleDirs.Name.ENUM:
 					Console.WriteLine("[ENUM]");
-					EnumDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					EnumDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
 					break;
 				case ModuleDirs.Name.MAP:
 					Console.WriteLine("[MAP]");
-					MapDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					MapDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
 					break;
 				case ModuleDirs.Name.QUERY:
 					Console.WriteLine("[QUERY]");
-					QueryDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), pattern);
+					QueryDirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, pattern);
 					break;
 			}
 		}
