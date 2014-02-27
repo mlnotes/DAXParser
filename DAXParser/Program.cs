@@ -32,7 +32,26 @@ namespace DAXParser
 
 		static void Help()
 		{
-			Console.WriteLine("Invalid Arguments");
+			string usage =
+				"Usage: DAXParser [-modules module-list] [-output output]\n" +
+				"                 [-pattern pattern] [-ownership ownership-list]\n" +
+				"                 -dirs dir-list";
+
+			string options =
+				"Options:\n" +
+				"-modules module-list       One or some of class,form,table,map,query,enum,\n" +
+				"                           separated by space, if not used, all modules will\n" +
+				"                           be parsed.\n" +
+				"-output output             The file you want to write the result.\n" +
+				"-pattern pattern           Choose files you want to parse, such as *.xpo.\n" +
+				"-ownership ownership-list  Files used to set the ownership of objects, if \n" +
+				"                           conflicts, the latter one works.\n" +
+				"-dirs dir-list             Directories of dax layers, the lower layer should \n" +
+				"                           appear former.";
+
+			string help = string.Format("{0}\n\n\n{1}", usage, options);
+
+			Console.WriteLine(help);
 		}
 
 		public void ParseCode(Argument arg)
