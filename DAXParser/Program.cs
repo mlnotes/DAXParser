@@ -38,8 +38,7 @@ namespace DAXParser
 		public void ParseCode(Argument arg)
 		{
 			CSVDumper dumper = CSVDumper.GetInstance();
-			List<Thread> threads = new List<Thread>();
-
+			
 			if (!string.IsNullOrEmpty(arg.Output))
 			{
 				dumper.Output = arg.Output;
@@ -60,11 +59,6 @@ namespace DAXParser
 				}
 			}
 
-			foreach (Thread thread in threads)
-			{
-				thread.Join();
-			}
-
 			dumper.Dispose();
 		}
 
@@ -75,32 +69,32 @@ namespace DAXParser
 				case ModuleDirs.Name.CLASS:
 					Console.WriteLine("[Parsing CLASS ...]");
 					List<ClassData> classes = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, ClassData.Parse, pattern);
-					dumper.DumpClass(classes);
+					dumper.Dump(classes);
 					break;
 				case ModuleDirs.Name.TABLE:
 					Console.WriteLine("[Parsing TABLE ...]");
 					List<TableData> tables = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, TableData.Parse, pattern);
-					dumper.DumpTable(tables);
+					dumper.Dump(tables);
 					break;
 				case ModuleDirs.Name.FORM:
 					Console.WriteLine("[Parsing FORM ...]");
 					List<FormData> forms = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, FormData.Parse, pattern);
-					dumper.DumpForm(forms);
+					dumper.Dump(forms);
 					break;
 				case ModuleDirs.Name.ENUM:
 					Console.WriteLine("[Parsing ENUM ...]");
 					List<EnumData> enums = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, EnumData.Parse, pattern);
-					dumper.DumpEnum(enums);
+					dumper.Dump(enums);
 					break;
 				case ModuleDirs.Name.MAP:
 					Console.WriteLine("[Parsing MAP ...]");
 					List<MapData> maps = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, MapData.Parse, pattern);
-					dumper.DumpMap(maps);
+					dumper.Dump(maps);
 					break;
 				case ModuleDirs.Name.QUERY:
 					Console.WriteLine("[Parsing QUERY ...]");
 					List<QueryData> queries = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, QueryData.Parse, pattern);
-					dumper.DumpQuery(queries);
+					dumper.Dump(queries);
 					break;
 			}
 		}

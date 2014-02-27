@@ -8,6 +8,7 @@ using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
 using DAXParser.CodeParse.Common;
+using DAXParser.CodeParse.Form.DataSource.Field;
 
 namespace DAXParser.CodeParse
 {
@@ -189,6 +190,71 @@ namespace DAXParser.CodeParse
 			}
 
 			return this;
+		}
+
+		private void GetTagInfoFromMethod(Dictionary<string, int> tags, MethodData method)
+		{
+			foreach (TagData tag in method.Tags)
+			{
+				if (tags.ContainsKey(tag.Name))
+				{
+					tags[tag.Name] += tag.LineCount;
+				}
+				else
+				{
+					tags[tag.Name] = tag.LineCount;
+				}
+			}
+		}
+
+		protected override Dictionary<string, int> GetTagInfo()
+		{
+			Dictionary<string, int> tags = new Dictionary<string, int>();
+			
+			// methods in form
+			foreach (MethodData m in methods.Values)
+			{
+				GetTagInfoFromMethod(tags, m);
+			}
+
+			// methods in control
+			foreach (ControlData control in controls.Values)
+			{
+				foreach (MethodData m in control.Methods.Values)
+				{
+					GetTagInfoFromMethod(tags, m);
+				}
+			}
+
+			// methods in data source
+			foreach (DataSourceData ds in dataSources.Values)
+			{
+				foreach (MethodData m in ds.Methods.Values)
+				{
+					GetTagInfoFromMethod(tags, m);
+				}
+
+				// methods in data field
+				foreach (DataFieldData field in ds.DataFields.Values)
+				{
+					foreach (MethodData m in field.Methods.Values)
+					{
+						GetTagInfoFromMethod(tags, m);
+					}
+				}
+
+				// methods in reference field
+				foreach (ReferenceFieldData field in ds.ReferenceFields.Values)
+				{
+					foreach (MethodData m in field.Methods.Values)
+					{
+						GetTagInfoFromMethod(tags, m);
+					}
+				}
+			}
+
+
+			return tags;
 		}
 	}
 }

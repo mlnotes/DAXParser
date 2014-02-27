@@ -82,5 +82,58 @@ namespace DAXParser.CodeParse
 			}
 			return this;
 		}
+
+		protected virtual Dictionary<string, int> GetTagInfo()
+		{
+			Dictionary<string, int> tagMap = new Dictionary<string, int>();
+			foreach (MethodData m in methods.Values)
+			{
+				foreach (TagData t in m.Tags)
+				{
+					if (tagMap.ContainsKey(t.Name))
+					{
+						tagMap[t.Name] += t.LineCount;
+					}
+					else
+					{
+						tagMap[t.Name] = t.LineCount;
+					}
+				}
+			}
+
+			return tagMap;
+		}
+
+		public virtual void Dump(StreamWriter writer, List<string> tags)
+		{
+			Dictionary<string, int> tagMap = GetTagInfo();
+			// write basic information
+			writer.Write("{0},{1},{2},{3},{4},{5}", Name, Type, Owner, 
+				LineCount, MethodCount, TagCount);
+
+
+			// write tag information
+			foreach (string tag in tags)
+			{
+				if (tagMap.ContainsKey(tag))
+				{
+					writer.Write(",{0}", tagMap[tag]);
+					tagMap.Remove(tag);
+				}
+				else
+				{
+					writer.Write(",");
+				}
+			}
+
+			// append new tag
+			foreach (KeyValuePair<string, int> pair in tagMap)
+			{
+				writer.Write(",{0}", pair.Value);
+				tags.Add(pair.Key);
+			}
+
+			writer.WriteLine();
+		}
 	}
 }
