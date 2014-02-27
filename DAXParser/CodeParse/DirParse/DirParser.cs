@@ -15,7 +15,7 @@ namespace DAXParser.CodeParse.DirParse
 			{
 				string name = obj.Name.ToUpper();
 				string prefix = "";
-				for (int i = 1; i <= name.Length; ++i)
+				for (int i = name.Length; i >= 1; --i)
 				{
 					prefix = name.Substring(0, i);
 					if (ownership.ContainsKey(prefix))

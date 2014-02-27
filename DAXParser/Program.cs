@@ -7,39 +7,13 @@ using System.Text.RegularExpressions;
 using DAXParser.CodeParse.DirParse;
 using DAXParser.CodeParse.Persistent;
 using System.IO;
+using System.Threading;
 
 
 namespace DAXParser
 {
 	class Program
 	{
-		static void PatternTest()
-		{
-			string line = @"if (_assetBook.AssetGroupDepreciation_IN    == NoYes::Yes   ";
-			string tags = "(RU|IN|BR|HU|JP|LV|EU|LT|CN|CZ|EE|PL|W)";
-			string validChars = "[A-Za-z0-9_]";
-			string validEndings = @"([><!=&|\)\s;{]*|[><!=&|\)\s;{]{1,}.*)";
-			string pattern = String.Format(@"({0}*)\.({1}*_{2}{3})$", validChars, validChars, tags, validEndings);
-			string[] separator = new string[] {"==", "!=", "&&", "||"};
-
-			string[] parts = line.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-			for (int i = 0; i < parts.Length; ++i)
-			{
-				Match match = Regex.Match(parts[i], pattern);
-				if (match.Success)
-				{
-					Console.WriteLine("[Line Match]: {0}", line);
-					Console.WriteLine("[Pattern]: {0}", pattern);
-					for (int j = 1; j < match.Groups.Count; ++j)
-					{
-						Console.WriteLine("[Group:{0}]: {1}", j, match.Groups[j].Value);
-					}
-
-				}
-			}				
-		
-		}
-
 		static void Main(string[] args)
 		{
 			long start = DateTime.Now.Ticks;
@@ -50,10 +24,10 @@ namespace DAXParser
 				return;
 			}
 
-			ParseCode(arg);
-			//PatternTest();
+			Program program = new Program();
+			program.ParseCode(arg);
 			long end = DateTime.Now.Ticks;
-			Console.WriteLine("Total Time in ticks: {0}", end-start);
+			Console.WriteLine("Total Time in ticks: {0}", end - start);
 		}
 
 		static void Help()
@@ -61,32 +35,40 @@ namespace DAXParser
 			Console.WriteLine("Invalid Arguments");
 		}
 
-		static void ParseCode(Argument arg)
+		public void ParseCode(Argument arg)
 		{
 			CSVDumper dumper = CSVDumper.GetInstance();
+			List<Thread> threads = new List<Thread>();
+
 			if (!string.IsNullOrEmpty(arg.Output))
 			{
 				dumper.Output = arg.Output;
 			}
 
-			if(arg.Modules.Length > 0)
+			if (arg.Modules.Length > 0)
 			{
-				foreach(string module in arg.Modules)
+				foreach (string module in arg.Modules)
 				{
 					ParseModule(arg.Dirs, module, arg.Ownership, arg.Pattern, dumper);
 				}
 			}
 			else
 			{
-				foreach(string module in ModuleDirs.Modules.Keys)
+				foreach (string module in ModuleDirs.Modules.Keys)
 				{
 					ParseModule(arg.Dirs, module, arg.Ownership, arg.Pattern, dumper);
 				}
 			}
+
+			foreach (Thread thread in threads)
+			{
+				thread.Join();
+			}
+
 			dumper.Dispose();
 		}
 
-		static void ParseModule(string[] dirs, String module, Dictionary<string, string> ownership, string pattern, CSVDumper dumper)
+		public void ParseModule(string[] dirs, String module, Dictionary<string, string> ownership, string pattern, CSVDumper dumper)
 		{
 			switch (module)
 			{
