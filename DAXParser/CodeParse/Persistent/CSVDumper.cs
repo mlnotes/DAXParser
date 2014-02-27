@@ -11,6 +11,7 @@ namespace DAXParser.CodeParse.Persistent
 	class CSVDumper: IDisposable
 	{
 		private string output;
+		private string tempFile;
 		private StreamWriter writer;
 		private List<string> tags;
 		private static CSVDumper instance;
@@ -42,8 +43,9 @@ namespace DAXParser.CodeParse.Persistent
 				else
 				{
 					output = value;
-					writer = new StreamWriter(output);
-					//writer.WriteLine("Name,Type,Owner,Lines,Methods,Tags,Lines Of Tags");
+					tempFile = Path.Combine(Path.GetTempFileName());
+					writer = new StreamWriter(tempFile);
+					
 				}
 			}
 
@@ -71,15 +73,26 @@ namespace DAXParser.CodeParse.Persistent
 		{
 			if (writer != null)
 			{
-				writer.Write("Name,Type,Owner,Lines,Methods,Tags");
-				foreach (string tag in tags)
-				{
-					writer.Write(",{0}", tag);
-				}
-				writer.WriteLine();
-
 				writer.Flush();
 				writer.Dispose();
+
+				using (StreamReader reader = new StreamReader(tempFile))
+				{
+					using (writer = new StreamWriter(output))
+					{
+						writer.Write("Name,Type,Owner,Lines,Methods,Tags");
+						foreach (string tag in tags)
+						{
+							writer.Write(",{0}", tag);
+						}
+						writer.WriteLine();
+
+						while (!reader.EndOfStream)
+						{
+							writer.WriteLine(reader.ReadLine());
+						}
+					}
+				}
 			}
 		}
 	}
