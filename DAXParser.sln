@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAXParser", "DAXParser\DAXParser.csproj", "{E3AB45BA-F5D2-49FD-A346-9D3AFDEBB20E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{57C63E8A-479C-474C-AB1A-2870FF676110}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,10 +13,6 @@ Global
 		{E3AB45BA-F5D2-49FD-A346-9D3AFDEBB20E}.Debug|x86.Build.0 = Debug|x86
 		{E3AB45BA-F5D2-49FD-A346-9D3AFDEBB20E}.Release|x86.ActiveCfg = Release|x86
 		{E3AB45BA-F5D2-49FD-A346-9D3AFDEBB20E}.Release|x86.Build.0 = Release|x86
-		{57C63E8A-479C-474C-AB1A-2870FF676110}.Debug|x86.ActiveCfg = Debug|x86
-		{57C63E8A-479C-474C-AB1A-2870FF676110}.Debug|x86.Build.0 = Debug|x86
-		{57C63E8A-479C-474C-AB1A-2870FF676110}.Release|x86.ActiveCfg = Release|x86
-		{57C63E8A-479C-474C-AB1A-2870FF676110}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

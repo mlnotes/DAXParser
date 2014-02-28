@@ -115,6 +115,11 @@ namespace DAXParser
 					List<QueryData> queries = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, QueryData.Parse, pattern);
 					dumper.Dump(queries);
 					break;
+				case ModuleDirs.Name.VIEW:
+					Console.WriteLine("[Parsing VIEW ...]");
+					List<ViewData> views = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), ownership, ViewData.Parse, pattern);
+					dumper.Dump(views);
+					break;
 			}
 		}
 	}
