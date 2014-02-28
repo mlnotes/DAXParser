@@ -18,13 +18,15 @@ namespace DAXParser
 		private string output = "dax_parse_result.csv";
         private string[] dirs;
         private string[] modules;
-        private Dictionary<string, string> ownership;
+        private Dictionary<string, string> prefixOwnership;
+		private Dictionary<string, string> postfixOwnership;
         
         private Argument()
         {
             dirs = new string[0];
             modules = new string[0];
-            ownership = new Dictionary<string, string>();
+            prefixOwnership = new Dictionary<string, string>();
+			postfixOwnership = new Dictionary<string, string>();
         }
 
 		public string Pattern { get { return pattern; } }
@@ -35,7 +37,9 @@ namespace DAXParser
 
 		public string[] Modules { get { return modules; } }
 
-		public Dictionary<string, string> Ownership { get { return ownership; } }
+		public Dictionary<string, string> PrefixOwnership { get { return prefixOwnership; } }
+
+		public Dictionary<string, string> PostfixOwnership { get { return postfixOwnership; } }
 
         public static Argument Parse(string[] args)
         {
@@ -87,7 +91,7 @@ namespace DAXParser
 				{
 					while (++i < args.Length && !args[i].StartsWith("-"))
 					{
-						parseOwnership(argument.ownership, args[i]);
+						parseOwnership(argument.prefixOwnership, argument.postfixOwnership, args[i]);
 					}
 				}
 				else
@@ -98,7 +102,7 @@ namespace DAXParser
             return argument;
         }
 
-        private static void parseOwnership(Dictionary<string, string> dict, string path)
+        private static void parseOwnership(Dictionary<string, string> prefix, Dictionary<string, string> postfix, string path)
         {
 			if (!File.Exists(path))
 			{
@@ -114,7 +118,14 @@ namespace DAXParser
 					string[] parts = line.Split('\t');
 					if (parts.Length >= 2)
 					{
-						dict[parts[1].ToUpper()] = parts[0];
+						if (parts[1].StartsWith("*"))
+						{
+							postfix[parts[1].Substring(1).ToUpper()] = parts[0];
+						}
+						else
+						{
+							prefix[parts[1].ToUpper()] = parts[0];
+						}
 					}
 				}
 			}

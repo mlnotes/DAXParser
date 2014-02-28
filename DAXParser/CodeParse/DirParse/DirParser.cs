@@ -11,14 +11,16 @@ namespace DAXParser.CodeParse.DirParse
 		where T: BaseObjectData
 	{
 		public ParmObject(int count, string path, Func<string, T> func, 
-							Dictionary<string, string> ownership,
+							Dictionary<string, string> prefixOwnership,
+							Dictionary<string, string> postfixOwnership,
 							List<T> objects, ManualResetEvent handle)
 		{
 			this.Count = count;
 			this.Path = path;
 			this.ParseFunc = func;
 			this.Objects = objects;
-			this.Ownership = ownership;
+			this.PrefixOwnership = prefixOwnership;
+			this.PostfixOwnership = postfixOwnership;
 			this.Handle = handle;
 		}
 
@@ -26,33 +28,53 @@ namespace DAXParser.CodeParse.DirParse
 		public string Path { get; set; }
 		public Func<string, T> ParseFunc { get; set; }
 		public List<T> Objects { get; set; }
-		public Dictionary<string, string> Ownership { get; set; }
+		public Dictionary<string, string> PrefixOwnership { get; set; }
+		public Dictionary<string, string> PostfixOwnership { get; set; }
 		public ManualResetEvent Handle { get; set; }
 	}
 
 	class DirParser
 	{
-		
 
-		protected static void ParseFirstLayerFile<T>(ParmObject<T> obj)
+		protected static void AssignOwner<T>(T obj, Dictionary<string, string> prefix, Dictionary<string, string> postfix)
 			where T:BaseObjectData
 		{
-			T data = obj.ParseFunc(obj.Path);
-			if (obj.Ownership != null)
+			if (prefix != null && prefix.Count > 0)
 			{
-				string name = data.Name.ToUpper();
-				string prefix = "";
+				string name = obj.Name.ToUpper();
+				string namePre = "";
 				for (int i = name.Length; i >= 1; --i)
 				{
-					prefix = name.Substring(0, i);
-					if (obj.Ownership.ContainsKey(prefix))
+					namePre = name.Substring(0, i);
+					if (prefix.ContainsKey(namePre))
 					{
-						data.Owner = obj.Ownership[prefix];
+						obj.PrefixOwner = prefix[namePre];
 						break;
 					}
 				}
 			}
 
+			if (postfix != null && postfix.Count > 0)
+			{
+				string name = obj.Name.ToUpper();
+				string namePost = "";
+				for (int i = 0; i < name.Length; ++i)
+				{
+					namePost = name.Substring(i);
+					if (postfix.ContainsKey(namePost))
+					{
+						obj.PostfixOwner = postfix[namePost];
+						break;
+					}
+				}
+			}
+		}
+
+		protected static void ParseFirstLayerFile<T>(ParmObject<T> obj)
+			where T:BaseObjectData
+		{
+			T data = obj.ParseFunc(obj.Path);
+			AssignOwner(data, obj.PrefixOwnership, obj.PostfixOwnership);
 
 			lock (obj.Objects)
 			{
@@ -64,24 +86,10 @@ namespace DAXParser.CodeParse.DirParse
 			}
 		}
 
-		protected static void AddObject<T>(List<T> objects, T obj, Dictionary<string, string> ownership)
+		protected static void AddObject<T>(List<T> objects, T obj, Dictionary<string, string> prefix, Dictionary<string, string> postfix)
 			where T : BaseObjectData
 		{
-			if (ownership != null)
-			{
-				string name = obj.Name.ToUpper();
-				string prefix = "";
-				for (int i = name.Length; i >= 1; --i)
-				{
-					prefix = name.Substring(0, i);
-					if (ownership.ContainsKey(prefix))
-					{
-						obj.Owner = ownership[prefix];
-						break;
-					}
-				}
-			}
-
+			AssignOwner(obj, prefix, postfix);
 			objects.Add(obj);
 		}
 
@@ -106,7 +114,8 @@ namespace DAXParser.CodeParse.DirParse
 			return map;
 		}
 
-		public static List<T> Parse<T>(string[] layerPaths, string module, Dictionary<string, string> ownership, Func<string, T> parseFunc, string pattern = "*.xpo")
+		public static List<T> Parse<T>(string[] layerPaths, string module, Dictionary<string, string> prefix,
+										Dictionary<string, string> postfix, Func<string, T> parseFunc, string pattern = "*.xpo")
 			where T : BaseObjectData
 		{
 			if (layerPaths == null || layerPaths.Length == 0)
@@ -124,7 +133,8 @@ namespace DAXParser.CodeParse.DirParse
 				//T data = parseFunc(file.FullName);
 				//AddObject(objects, data, ownership);
 
-				ParmObject<T> parm = new ParmObject<T>(files.Length, file.FullName, parseFunc, ownership, objects, handles[0]);
+				ParmObject<T> parm = new ParmObject<T>(files.Length, file.FullName, parseFunc, 
+											prefix, postfix, objects, handles[0]);
 				ThreadPool.QueueUserWorkItem(obj => ParseFirstLayerFile<T>(obj as ParmObject<T>), parm);
 			}
 
@@ -165,7 +175,7 @@ namespace DAXParser.CodeParse.DirParse
 			// mrege objects that do not exist in the first layer
 			foreach (T data in upperLayers.Values)
 			{
-				AddObject(objects, data, ownership);
+				AddObject(objects, data, prefix, postfix);
 			}
 
 			return objects;
