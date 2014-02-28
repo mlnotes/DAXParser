@@ -3,11 +3,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace DAXParser.CodeParse.DirParse
 {
+	class ParmObject<T>
+		where T: BaseObjectData
+	{
+		public ParmObject(int count, string path, Func<string, T> func, 
+							Dictionary<string, string> ownership,
+							List<T> objects, ManualResetEvent handle)
+		{
+			this.Count = count;
+			this.Path = path;
+			this.ParseFunc = func;
+			this.Objects = objects;
+			this.Ownership = ownership;
+			this.Handle = handle;
+		}
+
+		public int Count { get; set; }
+		public string Path { get; set; }
+		public Func<string, T> ParseFunc { get; set; }
+		public List<T> Objects { get; set; }
+		public Dictionary<string, string> Ownership { get; set; }
+		public ManualResetEvent Handle { get; set; }
+	}
+
 	class DirParser
 	{
+		
+
+		protected static void ParseFirstLayerFile<T>(ParmObject<T> obj)
+			where T:BaseObjectData
+		{
+			T data = obj.ParseFunc(obj.Path);
+			if (obj.Ownership != null)
+			{
+				string name = data.Name.ToUpper();
+				string prefix = "";
+				for (int i = name.Length; i >= 1; --i)
+				{
+					prefix = name.Substring(0, i);
+					if (obj.Ownership.ContainsKey(prefix))
+					{
+						data.Owner = obj.Ownership[prefix];
+						break;
+					}
+				}
+			}
+
+
+			lock (obj.Objects)
+			{
+				obj.Objects.Add(data);
+				if (obj.Count == obj.Objects.Count)
+				{
+					obj.Handle.Set();
+				}
+			}
+		}
+
 		protected static void AddObject<T>(List<T> objects, T obj, Dictionary<string, string> ownership)
 			where T : BaseObjectData
 		{
@@ -62,11 +118,17 @@ namespace DAXParser.CodeParse.DirParse
 			List<T> objects = new List<T>();
 
 			// Get all objects in the first layer
+			ManualResetEvent[] handles = new ManualResetEvent[]{new ManualResetEvent(false)};
 			foreach (FileInfo file in files)
 			{
-				T data = parseFunc(file.FullName);
-				AddObject(objects, data, ownership);
+				//T data = parseFunc(file.FullName);
+				//AddObject(objects, data, ownership);
+
+				ParmObject<T> parm = new ParmObject<T>(files.Length, file.FullName, parseFunc, ownership, objects, handles[0]);
+				ThreadPool.QueueUserWorkItem(obj => ParseFirstLayerFile<T>(obj as ParmObject<T>), parm);
 			}
+
+			WaitHandle.WaitAll(handles);
 
 			// merge objects in upper layers
 			Dictionary<string, T> upperLayers = new Dictionary<string, T>();

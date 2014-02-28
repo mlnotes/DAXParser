@@ -58,8 +58,8 @@ namespace DAXParser.CodeParse.Common
 							{
 								TagData td = new TagData();
 								td.Name = tag;
-								td.StartLine = tagMap[tag].Pop() + 1;
-								td.LineCount = method.LineCount - td.StartLine;
+								td.StartLine = tagMap[tag].Pop();
+								td.LineCount = method.LineCount - td.StartLine + 1;
 								method.tags.Add(td);
 							}
 						}
