@@ -39,7 +39,7 @@ namespace DAXParser
 
 			string options =
 				"Options:\n" +
-				"-modules module-list       One or some of class,form,table,map,query,enum,\n" +
+				"-modules module-list       One or some of class,form,table,map,query,enum,view\n" +
 				"                           separated by space, if not used, all modules will\n" +
 				"                           be parsed.\n" +
 				"-output output             The file you want to write the result.\n" +
