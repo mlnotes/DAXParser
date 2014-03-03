@@ -80,7 +80,7 @@ namespace DAXParser.CodeParse.Persistent
 				{
 					using (writer = new StreamWriter(output))
 					{
-						writer.Write("Name,Type,Prefix Owner,Postfix Owner,Lines,Methods,Tags");
+						writer.Write("Name,Type,Prefix Owner,Postfix Owner,Region,Lines,Methods,Tags");
 						foreach (string tag in tags)
 						{
 							writer.Write(",{0}", tag);

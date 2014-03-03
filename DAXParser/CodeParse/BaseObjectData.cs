@@ -17,6 +17,7 @@ namespace DAXParser.CodeParse
 		public string Name { get; set; }
 		public string PrefixOwner { get; set; }
 		public string PostfixOwner { get; set; }
+		public string Region { get; set; }
 		public virtual int LineCount { get { return lineCount; } }
 		public virtual int TagCount { get { return tagCount; } }
 		public virtual int MethodCount { get { return methods.Count; } }
@@ -109,8 +110,8 @@ namespace DAXParser.CodeParse
 		{
 			Dictionary<string, int> tagMap = GetTagInfo();
 			// write basic information
-			writer.Write("{0},{1},{2},{3},{4},{5},{6}", Name, Type, PrefixOwner, 
-				PostfixOwner, LineCount, MethodCount, TagCount);
+			writer.Write("{0},{1},{2},{3},{4},{5},{6},{7}", Name, Type, PrefixOwner, 
+				PostfixOwner, Region, LineCount, MethodCount, TagCount);
 
 
 			// write tag information
