@@ -58,7 +58,9 @@ namespace DAXParser
 		public void ParseCode(Argument arg)
 		{
 			CSVDumper dumper = CSVDumper.GetInstance();
-			
+
+			dumper.TagRegion = arg.TagRegion;
+
 			if (!string.IsNullOrEmpty(arg.Output))
 			{
 				dumper.Output = arg.Output;

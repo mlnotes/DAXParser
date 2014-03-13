@@ -108,7 +108,7 @@ namespace DAXParser.CodeParse
 			return tagMap;
 		}
 
-		public virtual void Dump(StreamWriter writer, List<string> tags)
+		public virtual void Dump(StreamWriter writer, List<string> tags, Dictionary<string, string> tagRegion, string[] tagRegionName)
 		{
 			Dictionary<string, int> tagMap = GetTagInfo();
 			// write basic information
@@ -116,6 +116,43 @@ namespace DAXParser.CodeParse
 			writer.Write("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", Name, Type, Region, Owner, PrefixOwner, 
 				PostfixOwner, Country, LineCount, MethodCount, TagCount);
 
+			if (tagRegionName != null && tagRegionName.Length > 0)
+			{
+				// get tag region information
+				Dictionary<string, int> regionCnt = new Dictionary<string, int>();
+				foreach (KeyValuePair<string, int> pair in tagMap)
+				{
+					for (int i = pair.Key.Length; i > 0; --i)
+					{
+						string tagPre = pair.Key.Substring(0, i);
+						if (tagRegion.ContainsKey(tagPre))
+						{
+							if(regionCnt.ContainsKey(tagRegion[tagPre]))
+							{
+								regionCnt[tagRegion[tagPre]] += pair.Value;
+							}
+							else
+							{
+								regionCnt[tagRegion[tagPre]] = pair.Value;
+							}
+							break;
+						}
+					}
+				}
+
+				// write tag region information
+				foreach (string region in tagRegionName)
+				{
+					if (regionCnt.ContainsKey(region))
+					{
+						writer.Write(",{0}", regionCnt[region]);
+					}
+					else
+					{
+						writer.Write(",");
+					}
+				}
+			}
 
 			// write tag information
 			foreach (string tag in tags)

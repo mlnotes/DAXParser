@@ -15,6 +15,7 @@ namespace DAXParser
 		private const string REGION = "-REGION";
 		private const string OUTPUT = "-OUTPUT";
 		private const string COUNTRY = "-COUNTRY";
+		private const string TAGREGION = "-TAGREGION";
 
 		private string pattern = "*.xpo";
 		private string output = "dax_parse_result.csv";
@@ -24,7 +25,8 @@ namespace DAXParser
 		private Dictionary<string, string> postfixOwnership;
 		private Dictionary<string, string> region;
 		private Dictionary<string, string> country;
-        
+		private Dictionary<string, string> tagRegion;
+		
         private Argument()
         {
             dirs = new string[0];
@@ -33,6 +35,7 @@ namespace DAXParser
 			postfixOwnership = new Dictionary<string, string>();
 			region = new Dictionary<string, string>();
 			country = new Dictionary<string, string>();
+			tagRegion = new Dictionary<string, string>();
         }
 
 		public string Pattern { get { return pattern; } }
@@ -50,6 +53,8 @@ namespace DAXParser
 		public Dictionary<string, string> Region { get { return region; } }
 
 		public Dictionary<string, string> Country { get { return country; } }
+
+		public Dictionary<string, string> TagRegion { get { return tagRegion; } }
 
         public static Argument Parse(string[] args)
         {
@@ -119,6 +124,13 @@ namespace DAXParser
 						ParseRegion(argument.region, args[i]);
 					}
 				}
+				else if (args[i] == TAGREGION)
+				{
+					while (++i < args.Length && !args[i].StartsWith("-"))
+					{
+						ParseTagRegion(argument.tagRegion, args[i]);
+					}
+				}
 				else
 				{
 					++i;
@@ -177,6 +189,29 @@ namespace DAXParser
 						{
 							country[parts[1].Substring(1).ToUpper()] = parts[0];
 						}
+					}
+				}
+			}
+		}
+
+		private static void ParseTagRegion(Dictionary<string, string> tagRegion, string path)
+		{
+			if (!File.Exists(path))
+			{
+				return;
+			}
+
+			using (StreamReader reader = new StreamReader(path))
+			{
+				string line = reader.ReadLine();
+				while (!reader.EndOfStream)
+				{
+					line = reader.ReadLine().Trim();
+					string[] parts = line.Split('\t');
+					if (parts.Length >= 2)
+					{
+						// currently only support prefix
+						tagRegion[parts[1].ToUpper()] = parts[0];
 					}
 				}
 			}

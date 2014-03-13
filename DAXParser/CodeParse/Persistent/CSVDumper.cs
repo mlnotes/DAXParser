@@ -15,7 +15,8 @@ namespace DAXParser.CodeParse.Persistent
 		private StreamWriter writer;
 		private List<string> tags;
 		private static CSVDumper instance;
-		
+		private Dictionary<string, string> tagRegion;
+		private string[] tagRegionName;
 
 		private CSVDumper()
 		{
@@ -55,6 +56,31 @@ namespace DAXParser.CodeParse.Persistent
 			}
 		}
 
+		public Dictionary<string, string> TagRegion
+		{
+			get
+			{
+				return tagRegion;
+			}
+			set
+			{
+				tagRegion = value;
+				HashSet<string> uniqueRegions = new HashSet<string>();
+				foreach (string region in tagRegion.Values)
+				{
+					uniqueRegions.Add(region);
+				}
+
+				tagRegionName = new string[uniqueRegions.Count];
+				int index = 0;
+				foreach (string region in uniqueRegions)
+				{
+					tagRegionName[index++] = region;
+				}
+			}
+
+		}
+
 		public void Dump<T>(List<T> data)
 			where T: BaseObjectData
 		{
@@ -65,7 +91,7 @@ namespace DAXParser.CodeParse.Persistent
 
 			foreach (T d in data)
 			{
-				d.Dump(writer, tags);
+				d.Dump(writer, tags, tagRegion, tagRegionName);
 			}
 		}
 
@@ -81,6 +107,17 @@ namespace DAXParser.CodeParse.Persistent
 					using (writer = new StreamWriter(output))
 					{
 						writer.Write("Name,Type,Region,Owner,Prefix Owner,Postfix Owner,Country,Lines,Methods,Tags");
+						
+						// tag region is fixed
+						if (tagRegionName != null && tagRegionName.Length > 0)
+						{
+							foreach (string region in tagRegionName)
+							{
+								writer.Write(",{0}", region);
+							}
+						}
+
+						
 						foreach (string tag in tags)
 						{
 							writer.Write(",{0}", tag);
