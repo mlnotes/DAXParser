@@ -184,7 +184,25 @@ namespace DAXParser
 
 		private static void ParseRegion(Dictionary<string, string> region, string path)
 		{
-			// TODO
+			if (!File.Exists(path))
+			{
+				return;
+			}
+
+			using (StreamReader reader = new StreamReader(path))
+			{
+				string line = reader.ReadLine();
+				while (!reader.EndOfStream)
+				{
+					line = reader.ReadLine().Trim();
+					string[] parts = line.Split('\t');
+					if (parts.Length >= 2)
+					{
+						// match all
+						region[parts[1].ToUpper()] = parts[0];
+					}
+				}
+			}
 		}
 	}
 }

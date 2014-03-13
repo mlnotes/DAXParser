@@ -14,6 +14,7 @@ namespace DAXParser.CodeParse.DirParse
 							Dictionary<string, string> prefixOwnership,
 							Dictionary<string, string> postfixOwnership,
 							Dictionary<string, string> country,
+							Dictionary<string, string> region,
 							List<T> objects, ManualResetEvent handle)
 		{
 			this.Count = count;
@@ -23,6 +24,7 @@ namespace DAXParser.CodeParse.DirParse
 			this.PrefixOwnership = prefixOwnership;
 			this.PostfixOwnership = postfixOwnership;
 			this.Country = country;
+			this.Region = region;
 			this.Handle = handle;
 		}
 
@@ -33,13 +35,15 @@ namespace DAXParser.CodeParse.DirParse
 		public Dictionary<string, string> PrefixOwnership { get; set; }
 		public Dictionary<string, string> PostfixOwnership { get; set; }
 		public Dictionary<string, string> Country { get; set; }
+		public Dictionary<string, string> Region { get; set; }
 		public ManualResetEvent Handle { get; set; }
 	}
 
 	class DirParser
 	{
 
-		protected static void AssignOwner<T>(T obj, Dictionary<string, string> prefix, Dictionary<string, string> postfix)
+		protected static void AssignOwnerAndRegion<T>(T obj, Dictionary<string, string> prefix, 
+								Dictionary<string, string> postfix, Dictionary<string, string> region)
 			where T:BaseObjectData
 		{
 			if (prefix != null && prefix.Count > 0)
@@ -73,6 +77,13 @@ namespace DAXParser.CodeParse.DirParse
 			}
 
 			obj.Owner = string.IsNullOrEmpty(obj.PostfixOwner) ? obj.PrefixOwner : obj.PostfixOwner;
+			if (region != null && region.Count > 0 && !string.IsNullOrEmpty(obj.Owner))
+			{
+				if (region.ContainsKey(obj.Owner.ToUpper()))
+				{
+					obj.Region = region[obj.Owner.ToUpper()];
+				}
+			}
 		}
 
 		protected static void AssignCountry<T>(T obj, Dictionary<string, string> country)
@@ -98,7 +109,7 @@ namespace DAXParser.CodeParse.DirParse
 			where T:BaseObjectData
 		{
 			T data = obj.ParseFunc(obj.Path);
-			AssignOwner(data, obj.PrefixOwnership, obj.PostfixOwnership);
+			AssignOwnerAndRegion(data, obj.PrefixOwnership, obj.PostfixOwnership, obj.Region);
 			AssignCountry(data, obj.Country);
 			lock (obj.Objects)
 			{
@@ -111,10 +122,11 @@ namespace DAXParser.CodeParse.DirParse
 		}
 
 		protected static void AddObject<T>(List<T> objects, T obj, Dictionary<string, string> prefix, 
-						Dictionary<string, string> postfix, Dictionary<string, string> country)
+						Dictionary<string, string> postfix, Dictionary<string, string> country,
+						Dictionary<string, string> region)
 			where T : BaseObjectData
 		{
-			AssignOwner(obj, prefix, postfix);
+			AssignOwnerAndRegion(obj, prefix, postfix, region);
 			AssignCountry(obj, country);
 			objects.Add(obj);
 		}
@@ -142,7 +154,8 @@ namespace DAXParser.CodeParse.DirParse
 
 		public static List<T> Parse<T>(string[] layerPaths, string module, Dictionary<string, string> prefix,
 										Dictionary<string, string> postfix, Dictionary<string, string> country,
-										Func<string, T> parseFunc, string pattern = "*.xpo")
+										Dictionary<string, string> region, Func<string, T> parseFunc, 
+										string pattern = "*.xpo")
 			where T : BaseObjectData
 		{
 			if (layerPaths == null || layerPaths.Length == 0)
@@ -161,7 +174,7 @@ namespace DAXParser.CodeParse.DirParse
 				//AddObject(objects, data, ownership);
 
 				ParmObject<T> parm = new ParmObject<T>(files.Length, file.FullName, parseFunc, 
-											prefix, postfix, country, objects, handles[0]);
+											prefix, postfix, country, region, objects, handles[0]);
 				ThreadPool.QueueUserWorkItem(obj => ParseFirstLayerFile<T>(obj as ParmObject<T>), parm);
 			}
 
@@ -202,7 +215,7 @@ namespace DAXParser.CodeParse.DirParse
 			// mrege objects that do not exist in the first layer
 			foreach (T data in upperLayers.Values)
 			{
-				AddObject(objects, data, prefix, postfix, country);
+				AddObject(objects, data, prefix, postfix, country, region);
 			}
 
 			return objects;
