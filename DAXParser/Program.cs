@@ -35,7 +35,8 @@ namespace DAXParser
 			string usage =
 				"Usage: DAXParser [-modules module-list] [-output output]\n" +
 				"                 [-pattern pattern] [-ownership ownership-list]\n" +
-				"                 [-country country-list] -dirs dir-list\n";
+				"                 [-country country-list] [-region region-list]\n" + 
+				"                 [-tagregion tagregion-list] -dirs dir-list\n";
 
 			string options =
 				"Options:\n" +
@@ -47,6 +48,8 @@ namespace DAXParser
 				"-ownership ownership-list  Files used to set the ownership of objects, if \n" +
 				"                           conflicts, the latter one works.\n" +
 				"-country country-list      Files used to set the country of objects.\n" +
+				"-region region-list        Files used to set the region of objects.\n" +
+				"-tagregion tagregion-list  Files used to set the region of tags.\n" +
 				"-dirs dir-list             Directories of dax layers, the lower layer should \n" +
 				"                           appear former.";
 
