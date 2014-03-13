@@ -14,6 +14,7 @@ namespace DAXParser
 		private const string OWNERSHIP = "-OWNERSHIP";
 		private const string REGION = "-REGION";
 		private const string OUTPUT = "-OUTPUT";
+		private const string COUNTRY = "-COUNTRY";
 
 		private string pattern = "*.xpo";
 		private string output = "dax_parse_result.csv";
@@ -22,6 +23,7 @@ namespace DAXParser
         private Dictionary<string, string> prefixOwnership;
 		private Dictionary<string, string> postfixOwnership;
 		private Dictionary<string, string> region;
+		private Dictionary<string, string> country;
         
         private Argument()
         {
@@ -30,6 +32,7 @@ namespace DAXParser
             prefixOwnership = new Dictionary<string, string>();
 			postfixOwnership = new Dictionary<string, string>();
 			region = new Dictionary<string, string>();
+			country = new Dictionary<string, string>();
         }
 
 		public string Pattern { get { return pattern; } }
@@ -45,6 +48,8 @@ namespace DAXParser
 		public Dictionary<string, string> PostfixOwnership { get { return postfixOwnership; } }
 
 		public Dictionary<string, string> Region { get { return region; } }
+
+		public Dictionary<string, string> Country { get { return country; } }
 
         public static Argument Parse(string[] args)
         {
@@ -99,13 +104,20 @@ namespace DAXParser
 						ParseOwnership(argument.prefixOwnership, argument.postfixOwnership, args[i]);
 					}
 				}
+				else if (args[i] == COUNTRY)
+				{
+					while (++i < args.Length && !args[i].StartsWith("-"))
+					{
+						ParseCountry(argument.country, args[i]);
+					}
+
+				}
 				else if (args[i] == REGION)
 				{
 					while (++i < args.Length && !args[i].StartsWith("-"))
 					{
 						ParseRegion(argument.region, args[i]);
 					}
-
 				}
 				else
 				{
@@ -144,7 +156,7 @@ namespace DAXParser
 			}
         }
 
-		private static void ParseRegion(Dictionary<string, string> region, string path)
+		private static void ParseCountry(Dictionary<string, string> country, string path)
 		{
 			if (!File.Exists(path))
 			{
@@ -163,11 +175,16 @@ namespace DAXParser
 						// currently only support postfix
 						if (parts[1].StartsWith("*"))
 						{
-							region[parts[1].Substring(1).ToUpper()] = parts[0];
+							country[parts[1].Substring(1).ToUpper()] = parts[0];
 						}
 					}
 				}
 			}
+		}
+
+		private static void ParseRegion(Dictionary<string, string> region, string path)
+		{
+			// TODO
 		}
 	}
 }
