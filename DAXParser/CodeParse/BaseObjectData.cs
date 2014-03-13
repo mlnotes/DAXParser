@@ -17,6 +17,8 @@ namespace DAXParser.CodeParse
 		public string Name { get; set; }
 		public string PrefixOwner { get; set; }
 		public string PostfixOwner { get; set; }
+		public string Owner { get; set; }
+		public string Region { get; set; }
 		public string Country { get; set; }
 		public virtual int LineCount { get { return lineCount; } }
 		public virtual int TagCount { get { return tagCount; } }
@@ -110,8 +112,8 @@ namespace DAXParser.CodeParse
 		{
 			Dictionary<string, int> tagMap = GetTagInfo();
 			// write basic information
-			string owner = string.IsNullOrEmpty(PostfixOwner) ? PrefixOwner : PostfixOwner;
-			writer.Write("{0},{1},{2},{3},{4},{5},{6},{7},{8}", Name, Type, owner, PrefixOwner, 
+
+			writer.Write("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", Name, Type, Region, Owner, PrefixOwner, 
 				PostfixOwner, Country, LineCount, MethodCount, TagCount);
 
 

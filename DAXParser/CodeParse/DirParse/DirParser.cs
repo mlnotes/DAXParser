@@ -71,6 +71,8 @@ namespace DAXParser.CodeParse.DirParse
 					}
 				}
 			}
+
+			obj.Owner = string.IsNullOrEmpty(obj.PostfixOwner) ? obj.PrefixOwner : obj.PostfixOwner;
 		}
 
 		protected static void AssignCountry<T>(T obj, Dictionary<string, string> country)
