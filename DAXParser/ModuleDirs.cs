@@ -16,6 +16,7 @@ namespace DAXParser
 			public const string MAP = "MAP";
 			public const string ENUM = "ENUM";
 			public const string VIEW = "VIEW";
+			public const string SSRS = "SSRS";
 		}
 
 		public class Dir
@@ -28,6 +29,7 @@ namespace DAXParser
 			public const string MAP = @"Data Dictionary\Maps";
 			public const string ENUM = @"Data Dictionary\Base Enums";
 			public const string VIEW = @"Data Dictionary\Views";
+			public const string SSRS = @"SSRS Reports\Reports";
 		}
 
 		
@@ -39,7 +41,8 @@ namespace DAXParser
 			{Name.TABLE, Dir.TABLE},
 			{Name.MAP, Dir.MAP},
 			{Name.ENUM, Dir.ENUM},
-			{Name.VIEW, Dir.VIEW}
+			{Name.VIEW, Dir.VIEW},
+			{Name.SSRS, Dir.SSRS}
 		};
 
 		public static Dictionary<string, string> Modules { get { return modules; } }

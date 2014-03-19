@@ -7,53 +7,55 @@ namespace DAXParser.CodeParse.Config
 {
 	class KeyWords
 	{
-		public static string DATASOURCE = "DATASOURCE";
-		public static string ENDDATASOURCE = "ENDDATASOURCE";
-		public static string Name = "Name";
-		public static string TABLE = "TABLE";
-		public static string ENDTABLE = "ENDTABLE";
-		public static string DATAFIELD = "DATAFIELD";
-		public static string ENDDATAFIELD = "ENDDATAFIELD";
-		public static string REFERENCEFIELD = "REFERENCEFIELD";
-		public static string ENDREFERENCEFIELD = "ENDREFERENCEFIELD";
-		public static string FIELDLIST = "FIELDLIST";
-		public static string ENDFIELDLIST = "ENDFIELDLIST";
-		public static string CONTROL = "CONTROL";
-		public static string ENDCONTROL = "ENDCONTROL";
-		public static string FORM = "FORM";
-		public static string ENDFORM = "ENDFORM";
-		public static string DESIGN = "DESIGN";
-		public static string ENDDESIGN = "ENDDESIGN";
-		public static string OBJECTBANK = "OBJECTBANK";
-		public static string ENDOBJECTBANK = "ENDOBJECTBANK";
-		public static string CLASS = "CLASS";
-		public static string INTERFACE = "INTERFACE";
-		public static string ENDCLASS = "ENDCLASS";
-		public static string ENUMTYPE = "ENUMTYPE";
-		public static string ENDENUMTYPE = "ENDENUMTYPE";
-		public static string REFERENCES = "REFERENCES";
-		public static string ENDREFERENCES = "ENDREFERENCES";
-		public static string INDICES = "INDICES";
-		public static string ENDINDICES = "ENDINDICES";
+		public const string DATASOURCE = "DATASOURCE";
+		public const string ENDDATASOURCE = "ENDDATASOURCE";
+		public const string Name = "Name";
+		public const string TABLE = "TABLE";
+		public const string ENDTABLE = "ENDTABLE";
+		public const string DATAFIELD = "DATAFIELD";
+		public const string ENDDATAFIELD = "ENDDATAFIELD";
+		public const string REFERENCEFIELD = "REFERENCEFIELD";
+		public const string ENDREFERENCEFIELD = "ENDREFERENCEFIELD";
+		public const string FIELDLIST = "FIELDLIST";
+		public const string ENDFIELDLIST = "ENDFIELDLIST";
+		public const string CONTROL = "CONTROL";
+		public const string ENDCONTROL = "ENDCONTROL";
+		public const string FORM = "FORM";
+		public const string ENDFORM = "ENDFORM";
+		public const string DESIGN = "DESIGN";
+		public const string ENDDESIGN = "ENDDESIGN";
+		public const string OBJECTBANK = "OBJECTBANK";
+		public const string ENDOBJECTBANK = "ENDOBJECTBANK";
+		public const string CLASS = "CLASS";
+		public const string INTERFACE = "INTERFACE";
+		public const string ENDCLASS = "ENDCLASS";
+		public const string ENUMTYPE = "ENUMTYPE";
+		public const string ENDENUMTYPE = "ENDENUMTYPE";
+		public const string REFERENCES = "REFERENCES";
+		public const string ENDREFERENCES = "ENDREFERENCES";
+		public const string INDICES = "INDICES";
+		public const string ENDINDICES = "ENDINDICES";
+		public const string REPORT = "REPORT";
+		public const string ENDREPORT = "ENDREPORT";
 
-		public static string MAP = "MAP";
-		public static string ENDMAP = "ENDMAP";
-		public static string FIELDS = "FIELDS";
-		public static string ENDFIELDS = "ENDFIELDS";
-		public static string MAPPINGS = "MAPPINGS";
-		public static string ENDMAPPINGS = "ENDMAPPINGS";
+		public const string MAP = "MAP";
+		public const string ENDMAP = "ENDMAP";
+		public const string FIELDS = "FIELDS";
+		public const string ENDFIELDS = "ENDFIELDS";
+		public const string MAPPINGS = "MAPPINGS";
+		public const string ENDMAPPINGS = "ENDMAPPINGS";
 
-		public static string VIEW = "VIEW";
-		public static string ENDVIEW = "ENDVIEW";
+		public const string VIEW = "VIEW";
+		public const string ENDVIEW = "ENDVIEW";
 
-		public static string QUERY = "QUERY";
-		public static string ENDQUERY = "ENDQUERY";
-		public static string BLOCKS = "BLOCKS";
-		public static string ENDBLOCKS = "ENDBLOCKS";
+		public const string QUERY = "QUERY";
+		public const string ENDQUERY = "ENDQUERY";
+		public const string BLOCKS = "BLOCKS";
+		public const string ENDBLOCKS = "ENDBLOCKS";
 
-		public static string METHODS = "METHODS";
-		public static string ENDMETHODS = "ENDMETHODS";
-		public static string SOURCE = "SOURCE";
-		public static string ENDSOURCE = "ENDSOURCE";
+		public const string METHODS = "METHODS";
+		public const string ENDMETHODS = "ENDMETHODS";
+		public const string SOURCE = "SOURCE";
+		public const string ENDSOURCE = "ENDSOURCE";
 	}
 }

@@ -133,6 +133,11 @@ namespace DAXParser
 					List<ViewData> views = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), prefix, postfix, country, region, ViewData.Parse, pattern);
 					dumper.Dump(views);
 					break;
+				case ModuleDirs.Name.SSRS:
+					Console.WriteLine("[Parsing SSRS ...]");
+					List<SSRSData> ssrs = DirParser.Parse(dirs, ModuleDirs.GetModuleDir(module), prefix, postfix, country, region, SSRSData.Parse, pattern);
+					dumper.Dump(ssrs);
+					break;
 			}
 		}
 	}
