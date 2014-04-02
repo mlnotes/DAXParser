@@ -14,7 +14,7 @@ namespace DAXParser
 {
 	class Program
 	{
-		static void Main1(string[] args)
+		static void Main(string[] args)
 		{
 			long start = DateTime.Now.Ticks;
 			Argument arg = Argument.Parse(args);
