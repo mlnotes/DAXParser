@@ -9,6 +9,7 @@ using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
 using DAXParser.CodeParse.Common;
 using DAXParser.CodeParse.Form.DataSource.Field;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse
 {
@@ -96,7 +97,7 @@ namespace DAXParser.CodeParse
 			
 		}
 
-		private static void ParseDesign(StreamReader reader, FormData data)
+		private static void ParseDesign(XPOReader reader, FormData data)
 		{
 			while (!reader.EndOfStream)
 			{
@@ -112,7 +113,7 @@ namespace DAXParser.CodeParse
 			}
 		}
 
-		private static void ParseDataSources(StreamReader reader, FormData data)
+		private static void ParseDataSources(XPOReader reader, FormData data)
 		{
 			while (!reader.EndOfStream)
 			{
@@ -130,10 +131,10 @@ namespace DAXParser.CodeParse
 
 		public static FormData Parse(string path)
 		{
-			using (StreamReader reader = new StreamReader(path))
+			XPOReader reader;
+			FormData data = new FormData();
+			using (reader = new XPOReader(path))
 			{
-				FormData data = new FormData();
-
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine().TrimStart();
@@ -162,9 +163,10 @@ namespace DAXParser.CodeParse
 						ParseDataSources(reader, data);
 					}
 				}
-
-				return data;
 			}
+
+			data.LineCountOfFile = reader.LineCountOfFile;
+			return data;
 		}
 
 		public override BaseObjectData MergeWith(BaseObjectData data)

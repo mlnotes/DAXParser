@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using DAXParser.CodeParse.Config;
+﻿using DAXParser.CodeParse.Config;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse
 {
@@ -11,10 +7,10 @@ namespace DAXParser.CodeParse
 	{
 		public static EnumData Parse(string path)
 		{
-			using (StreamReader reader = new StreamReader(path))
+			XPOReader reader;
+			EnumData data = new EnumData();
+			using (reader = new XPOReader(path))
 			{
-				EnumData data = new EnumData();
-
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine().TrimStart();
@@ -31,9 +27,10 @@ namespace DAXParser.CodeParse
 						data.lineCount++;
 					}
 				}
-
-				return data;
 			}
+
+			data.LineCountOfFile = reader.LineCountOfFile;
+			return data;
 		}
 
 		public override BaseObjectData MergeWith(BaseObjectData data)

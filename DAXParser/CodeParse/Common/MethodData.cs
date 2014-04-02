@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using DAXParser.CodeParse.Config;
 using System.Text.RegularExpressions;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse.Common
 {
@@ -36,12 +37,12 @@ namespace DAXParser.CodeParse.Common
 			return null;
 		}
 
-		public static MethodData Parse(string firstLine, StreamReader reader)
+		public static MethodData Parse(string firstLine, XPOReader reader)
 		{
 			MethodData method = new MethodData();
 			method.Name = firstLine.Substring(KeyWords.SOURCE.Length).Trim().Substring(1);
 
-			Dictionary<string, Stack<int>> tagMap = new Dictionary<string,Stack<int>>();
+			Dictionary<string, Stack<int>> tagMap = new Dictionary<string, Stack<int>>();
 			while (!reader.EndOfStream)
 			{
 				string line = reader.ReadLine().TrimStart();

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.IO;
-using DAXParser.CodeParse.Config;
+using System.Linq;
 using DAXParser.CodeParse.Common;
+using DAXParser.CodeParse.Config;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse
 {
@@ -20,6 +19,7 @@ namespace DAXParser.CodeParse
 		public string Owner { get; set; }
 		public string Region { get; set; }
 		public string Country { get; set; }
+		public int LineCountOfFile { get; set; }
 		public virtual int LineCount { get { return lineCount; } }
 		public virtual int TagCount { get { return tagCount; } }
 		public virtual int MethodCount { get { return methods.Count; } }
@@ -40,7 +40,7 @@ namespace DAXParser.CodeParse
 			tagCount += method.TagCount;
 		}
 	
-		protected static List<MethodData> ParseMethods(StreamReader reader)
+		protected static List<MethodData> ParseMethods(XPOReader reader)
 		{
 			List<MethodData> methods = new List<MethodData>();
 
@@ -66,7 +66,7 @@ namespace DAXParser.CodeParse
 
 		}
 
-		protected static void SkipTo(StreamReader reader, string symbol)
+		protected static void SkipTo(XPOReader reader, string symbol)
 		{
 			while (!reader.EndOfStream)
 			{
@@ -113,8 +113,8 @@ namespace DAXParser.CodeParse
 			Dictionary<string, int> tagMap = GetTagInfo();
 			// write basic information
 
-			writer.Write("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", Name, Type, Region, Owner, PrefixOwner, 
-				PostfixOwner, Country, LineCount, MethodCount, TagCount);
+			writer.Write("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}", Name, Type, Region, Owner, PrefixOwner, 
+				PostfixOwner, Country, LineCount, LineCountOfFile, MethodCount, TagCount);
 
 			if (tagRegionName != null && tagRegionName.Length > 0)
 			{

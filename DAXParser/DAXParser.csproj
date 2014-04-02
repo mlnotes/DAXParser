@@ -53,7 +53,8 @@
     <Compile Include="CodeParse\BaseObjectData.cs" />
     <Compile Include="CodeParse\ClassData.cs" />
     <Compile Include="CodeParse\DirParse\DirParser.cs" />
-    <Compile Include="CodeParse\Persistent\CSVDumper.cs" />
+    <Compile Include="CodeParse\IO\XPOReader.cs" />
+    <Compile Include="CodeParse\IO\CSVDumper.cs" />
     <Compile Include="CodeParse\SSRSData.cs" />
     <Compile Include="CodeParse\ViewData.cs" />
     <Compile Include="ModuleDirs.cs" />

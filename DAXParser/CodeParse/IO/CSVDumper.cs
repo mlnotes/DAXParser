@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DAXParser.CodeParse.Common;
 using System.IO;
-using System.Runtime.CompilerServices;
 
-namespace DAXParser.CodeParse.Persistent
+namespace DAXParser.CodeParse.IO
 {
 	class CSVDumper: IDisposable
 	{
@@ -106,7 +102,7 @@ namespace DAXParser.CodeParse.Persistent
 				{
 					using (writer = new StreamWriter(output))
 					{
-						writer.Write("Name,Type,Region,Owner,Prefix Owner,Postfix Owner,Country,Lines,Methods,Tags");
+						writer.Write("Name,Type,Region,Owner,Prefix Owner,Postfix Owner,Country,Lines,LinesOfFile,Methods,Tags");
 						
 						// tag region is fixed
 						if (tagRegionName != null && tagRegionName.Length > 0)

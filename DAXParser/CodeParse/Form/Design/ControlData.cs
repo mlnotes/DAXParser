@@ -6,6 +6,7 @@ using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
 using DAXParser.CodeParse.Common;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse.Form.Design
 {
@@ -16,7 +17,7 @@ namespace DAXParser.CodeParse.Form.Design
 			get { return "CONTROL"; }
 		}
 
-		public static ControlData Parse(string firstLine, StreamReader reader)
+		public static ControlData Parse(string firstLine, XPOReader reader)
 		{
 			ControlData data = new ControlData();
 

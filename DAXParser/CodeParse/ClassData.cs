@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using DAXParser.CodeParse.Config;
-using DAXParser.CodeParse;
+﻿using System.Collections.Generic;
 using DAXParser.CodeParse.Common;
+using DAXParser.CodeParse.Config;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse
 {
@@ -18,10 +14,11 @@ namespace DAXParser.CodeParse
 
 		public static ClassData Parse(string path)
 		{
-			using (StreamReader reader = new StreamReader(path))
+			ClassData data = new ClassData();
+			XPOReader reader;
+			using (reader = new XPOReader(path))
 			{
-				ClassData data = new ClassData();
-
+				
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine().TrimStart();
@@ -46,8 +43,10 @@ namespace DAXParser.CodeParse
 						}
 					}
 				}
-				return data;
 			}
+
+			data.LineCountOfFile = reader.LineCountOfFile;
+			return data;
 		}
 	}
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using DAXParser.CodeParse.Config;
+﻿using System.Collections.Generic;
 using DAXParser.CodeParse.Common;
+using DAXParser.CodeParse.Config;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse
 {
@@ -15,7 +12,7 @@ namespace DAXParser.CodeParse
 			get { return "TABLE"; }
 		}
 
-		private static void ParseReferences(StreamReader reader)
+		private static void ParseReferences(XPOReader reader)
 		{
 			while (!reader.EndOfStream)
 			{
@@ -27,7 +24,7 @@ namespace DAXParser.CodeParse
 			}
 		}
 
-		private static void ParseIndices(StreamReader reader)
+		private static void ParseIndices(XPOReader reader)
 		{
 			while (!reader.EndOfStream)
 			{
@@ -41,10 +38,10 @@ namespace DAXParser.CodeParse
 
 		public static TableData Parse(string path)
 		{
-			using (StreamReader reader = new StreamReader(path))
+			XPOReader reader;
+			TableData data = new TableData();
+			using (reader = new XPOReader(path))
 			{
-				TableData data = new TableData();
-
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine().TrimStart();
@@ -73,9 +70,10 @@ namespace DAXParser.CodeParse
 						ParseIndices(reader);
 					}
 				}
-
-				return data;
 			}
+
+			data.LineCountOfFile = reader.LineCountOfFile;
+			return data;
 		}
 	}
 }

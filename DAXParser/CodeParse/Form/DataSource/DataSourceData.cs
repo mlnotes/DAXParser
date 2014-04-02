@@ -7,6 +7,7 @@ using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
 using DAXParser.CodeParse.Common;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse.Form.DataSource
 {
@@ -93,7 +94,7 @@ namespace DAXParser.CodeParse.Form.DataSource
 			}
 		}
 
-		private static void ParseFieldList(StreamReader reader, DataSourceData data)
+		private static void ParseFieldList(XPOReader reader, DataSourceData data)
 		{
 			while (!reader.EndOfStream)
 			{
@@ -113,7 +114,7 @@ namespace DAXParser.CodeParse.Form.DataSource
 			}
 		}
 
-		public static DataSourceData Parse(StreamReader reader)
+		public static DataSourceData Parse(XPOReader reader)
 		{
 			DataSourceData data = new DataSourceData();
 

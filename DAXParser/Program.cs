@@ -5,7 +5,7 @@ using System.Text;
 using DAXParser.CodeParse;
 using System.Text.RegularExpressions;
 using DAXParser.CodeParse.DirParse;
-using DAXParser.CodeParse.Persistent;
+using DAXParser.CodeParse.IO;
 using System.IO;
 using System.Threading;
 

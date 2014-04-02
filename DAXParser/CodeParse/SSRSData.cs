@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using DAXParser.CodeParse.Config;
+﻿using DAXParser.CodeParse.Config;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse
 {
@@ -18,7 +14,8 @@ namespace DAXParser.CodeParse
 		public static SSRSData Parse(string path)
 		{
 			SSRSData data = new SSRSData();
-			using (StreamReader reader = new StreamReader(path))
+			XPOReader reader;
+			using (reader = new XPOReader(path))
 			{
 				while (!reader.EndOfStream)
 				{
@@ -37,6 +34,8 @@ namespace DAXParser.CodeParse
 					}
 				}
 			}
+
+			data.LineCountOfFile = reader.LineCountOfFile;
 			return data;
 		}
 

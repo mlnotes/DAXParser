@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using DAXParser.CodeParse.Config;
+﻿using System.Collections.Generic;
 using DAXParser.CodeParse.Common;
+using DAXParser.CodeParse.Config;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse
 {
@@ -17,10 +14,10 @@ namespace DAXParser.CodeParse
 
 		public static ViewData Parse(string path)
 		{
-			using (StreamReader reader = new StreamReader(path))
+			ViewData data = new ViewData();
+			XPOReader reader;
+			using (reader = new XPOReader(path))
 			{
-				ViewData data = new ViewData();
-
 				while (!reader.EndOfStream)
 				{
 					string line = reader.ReadLine().Trim();
@@ -41,8 +38,9 @@ namespace DAXParser.CodeParse
 						}
 					}
 				}
-				return data;
 			}
+			data.LineCountOfFile = reader.LineCountOfFile;
+			return data;
 		}
 	}
 }

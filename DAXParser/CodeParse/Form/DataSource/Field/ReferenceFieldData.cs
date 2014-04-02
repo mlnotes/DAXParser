@@ -6,6 +6,7 @@ using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse;
 using DAXParser.CodeParse.Common;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse.Form.DataSource.Field
 {
@@ -16,7 +17,7 @@ namespace DAXParser.CodeParse.Form.DataSource.Field
 			get { return "REFERENCEFIELD"; }
 		}
 
-		public static ReferenceFieldData Parse(string firstLine, StreamReader reader)
+		public static ReferenceFieldData Parse(string firstLine, XPOReader reader)
 		{
 			ReferenceFieldData data = new ReferenceFieldData();
 			data.Name = firstLine.TrimStart().Substring(KeyWords.REFERENCEFIELD.Length).Trim();

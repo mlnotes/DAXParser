@@ -6,6 +6,7 @@ using DAXParser.CodeParse;
 using System.IO;
 using DAXParser.CodeParse.Config;
 using DAXParser.CodeParse.Common;
+using DAXParser.CodeParse.IO;
 
 namespace DAXParser.CodeParse.Form.DataSource.Field
 {
@@ -16,7 +17,7 @@ namespace DAXParser.CodeParse.Form.DataSource.Field
 			get { return "DATAFIELD"; }
 		}
 
-		public static DataFieldData Parse(string firstLine, StreamReader reader)
+		public static DataFieldData Parse(string firstLine, XPOReader reader)
 		{
 			DataFieldData data = new DataFieldData();
 			data.Name = firstLine.TrimStart().Substring(KeyWords.DATAFIELD.Length).Trim();
