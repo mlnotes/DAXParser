@@ -138,20 +138,6 @@ namespace DAXParser.CodeParse.DirParse
 			return dir.GetFiles(pattern);
 		}
 
-		protected static Dictionary<string, T> ParseUpperLayer<T>(string layerPath, string module, string pattern, Func<string, T> func)
-			where T : BaseObjectData
-		{
-			FileInfo[] files = GetFiles(layerPath, module, pattern);
-			Dictionary<string, T> map = new Dictionary<string, T>();
-			foreach (FileInfo file in files)
-			{
-				T data = func(file.FullName);
-				map[data.Name.ToUpper()] = data;
-			}
-
-			return map;
-		}
-
 		public static List<T> Parse<T>(string[] layerPaths, string module, Dictionary<string, string> prefix,
 										Dictionary<string, string> postfix, Dictionary<string, string> country,
 										Dictionary<string, string> region, Func<string, T> parseFunc, 
