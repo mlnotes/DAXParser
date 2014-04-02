@@ -181,6 +181,11 @@ namespace DAXParser.CodeParse.DirParse
 			foreach (string layerPath in layerPaths)
 			{
 				FileInfo[] files = GetFiles(layerPath, module, pattern);
+				if (files.Length == 0)
+				{
+					continue;
+				}
+
 				processed.Value = 0;
 				handles[0].Reset();
 				foreach (FileInfo file in files)
