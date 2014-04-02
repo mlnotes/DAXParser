@@ -12,6 +12,7 @@ namespace DAXParser.CodeParse
 		protected Dictionary<string, MethodData> methods = new Dictionary<string, MethodData>();
 		protected int lineCount = 0;
 		protected int tagCount = 0;
+		protected int lineCountOfFile = 0;
 
 		public string Name { get; set; }
 		public string PrefixOwner { get; set; }
@@ -19,7 +20,7 @@ namespace DAXParser.CodeParse
 		public string Owner { get; set; }
 		public string Region { get; set; }
 		public string Country { get; set; }
-		public int LineCountOfFile { get; set; }
+		public int LineCountOfFile { get { return lineCountOfFile; } }
 		public virtual int LineCount { get { return lineCount; } }
 		public virtual int TagCount { get { return tagCount; } }
 		public virtual int MethodCount { get { return methods.Count; } }
@@ -114,7 +115,7 @@ namespace DAXParser.CodeParse
 			// write basic information
 
 			writer.Write("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}", Name, Type, Region, Owner, PrefixOwner, 
-				PostfixOwner, Country, LineCount, LineCountOfFile, MethodCount, TagCount);
+				PostfixOwner, Country, LineCount, lineCountOfFile, MethodCount, TagCount);
 
 			if (tagRegionName != null && tagRegionName.Length > 0)
 			{

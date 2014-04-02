@@ -72,7 +72,7 @@ namespace DAXParser.CodeParse
 				}
 			}
 
-			data.LineCountOfFile = reader.LineCountOfFile;
+			data.lineCountOfFile = reader.LineCountOfFile;
 			return data;
 		}
 	}
