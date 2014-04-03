@@ -70,13 +70,16 @@ namespace DAXParser.CodeParse
 			if (dataSources.Keys.Contains(name))
 			{
 				lineCount -= dataSources[name].LineCount;
+				lineCountOfFile -= dataSources[name].LineCount;
 				dataSources[name].MergeWith(dataSource);
 				lineCount += dataSources[name].LineCount;
+				lineCountOfFile += dataSources[name].LineCount;
 			}
 			else
 			{
 				dataSources[name] = dataSource;
 				lineCount += dataSource.LineCount;
+				lineCountOfFile += dataSource.LineCount;
 			}
 		}
 
@@ -86,13 +89,16 @@ namespace DAXParser.CodeParse
 			if (controls.Keys.Contains(name))
 			{
 				lineCount -= controls[name].LineCount;
+				lineCountOfFile -= controls[name].LineCount;
 				controls[name].MergeWith(control);
 				lineCount += controls[name].LineCount;
+				lineCountOfFile += controls[name].LineCount;
 			}
 			else
 			{
 				controls[name] = control;
 				lineCount += control.LineCount;
+				lineCountOfFile += control.LineCount;
 			}
 			
 		}

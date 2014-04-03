@@ -35,7 +35,8 @@ namespace DAXParser.CodeParse
 
 		public override BaseObjectData MergeWith(BaseObjectData data)
 		{
-			this.lineCount = data.LineCount;
+			lineCount = data.LineCount;
+			lineCountOfFile = data.LineCountOfFile;
 			return this;
 		}
 

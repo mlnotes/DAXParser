@@ -21,7 +21,7 @@ namespace DAXParser.CodeParse
 		public string Region { get; set; }
 		public string Country { get; set; }
 		public int LineCountOfFile { get { return lineCountOfFile; } }
-		public virtual int LineCount { get { return lineCount; } }
+		public int LineCount { get { return lineCount; } }
 		public virtual int TagCount { get { return tagCount; } }
 		public virtual int MethodCount { get { return methods.Count; } }
 		public abstract string Type { get;}
@@ -34,11 +34,13 @@ namespace DAXParser.CodeParse
 			{
 				lineCount -= methods[name].LineCount;
 				tagCount -= methods[name].TagCount;
+				lineCountOfFile -= methods[name].LineCount;
 			}
 
 			methods[name] = method;
 			lineCount += method.LineCount;
 			tagCount += method.TagCount;
+			lineCountOfFile += method.LineCount;
 		}
 	
 		protected static List<MethodData> ParseMethods(XPOReader reader)
